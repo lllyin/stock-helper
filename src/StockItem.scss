@@ -12,6 +12,7 @@
     padding: 0 8px;
   }
   .stock-item-value {
+    word-break: break-all;
     &.link {
       cursor: pointer;
     }

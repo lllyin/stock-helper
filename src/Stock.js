@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import StockItem from './StockItem';
 import { getStockCodes } from './utils/common';
 import { API_BASE_URL, STOCKS, UPDATE_INTERVAL } from './constants';
+// import MOCK_DATA from './mockdata';
 
 import './Stock.scss';
 
 const $ = window.$;
-
-const STOCK_CODE_MAP = STOCKS.reduce((sum, stock) => {
-  sum[stock.code] = stock;
-  return sum;
-}, {});
+const TYPE_MAP = {
+  asce: 1,
+  desc: -1,
+};
 
 let timer = null;
 
@@ -19,13 +19,15 @@ export default class Stock extends Component {
     super(props);
     this.state = {
       stocks: [],
+      sort: 'default',
     };
   }
 
   componentDidMount() {
     this.fetchStocks();
+    // this.setSotcks(MOCK_DATA);
     setInterval(() => {
-      // this.fetchStocks();
+      this.fetchStocks();
     }, UPDATE_INTERVAL);
   }
 
@@ -36,65 +38,84 @@ export default class Stock extends Component {
   fetchStocks() {
     const stockCodes = STOCKS.map(stock => String(stock.code));
     const _this = this;
+    
+    $ &&
+      $.ajax({
+        type: 'GET',
+        dataType: 'jsonp',
+        url: `${API_BASE_URL}${getStockCodes(stockCodes).join(',')}`,
+        success: function(serverData, status, xhr) {
+          _this.setSotcks(serverData);
+        },
+        error: function(e) {
+          console.error('请求接口错误');
+        },
+      });
+  }
 
-    $.ajax({
-      type: 'GET',
-      dataType: 'jsonp',
-      url: `${API_BASE_URL}${getStockCodes(stockCodes).join(',')}`,
-      success: function(data, status, xhr) {
-        // 合并成本价、持仓信息
-        const stocks = Object.values(data).map(stockItem => {
-          if (STOCK_CODE_MAP[stockItem.symbol]) {
-            const newStockItem = {
-              ...stockItem,
-              ...STOCK_CODE_MAP[stockItem.symbol],
-            };
+  setSotcks = serverData => {
+    const stockMap = Object.values(serverData).reduce((sum, stock) => {
+      sum[stock.symbol] = stock;
+      return sum;
+    }, {});
+    // 合并成本价、持仓信息
+    const stocks = STOCKS.map(localStock => {
+      if (stockMap[localStock.code]) {
+        const stockItem = {
+          ...localStock,
+          ...stockMap[localStock.code],
+        };
+        const { costPrice, price, position } = stockItem;
 
-            if (newStockItem.costPrice > newStockItem.price) {
-              newStockItem.bcFn = `1-(${(newStockItem.position * newStockItem.price).toFixed(2)}+${
-                newStockItem.price
-              }x)/(${newStockItem.costPrice}*${newStockItem.position}+${newStockItem.price}x)`;
-            } else {
-              newStockItem.jcFn = `(${(newStockItem.position * newStockItem.price).toFixed(2)}+${
-                newStockItem.price
-              }x)/(${newStockItem.costPrice}*${newStockItem.position}+${newStockItem.price}x)-1`;
-            }
-            return newStockItem;
-          } else {
-            return stockItem;
-          }
-        });
-
-        _this.setState({
-          stocks,
-        });
-      },
-      error: function(e) {
-        console.error('请求接口错误');
-      },
+        if (costPrice > price) {
+          stockItem.bcFn = `1-(${(position * price).toFixed(2)}+${price}x)/(${costPrice}*${position}+${price}x)`;
+        } else {
+          stockItem.jcFn = `(${(position * price).toFixed(2)}+${price}x)/(${costPrice}*${position}+${price}x)-1`;
+        }
+        stockItem.earnRate = price / costPrice - 1;
+        return stockItem;
+      } else {
+        return localStock;
+      }
     });
-  }
 
-  handleSortChange = (e) => {
-    console.log('sort', e.target.value);
-  }
+    this.stocks = [...stocks];
+    this.setState({
+      stocks,
+    });
+  };
+
+  handleSortChange = e => {
+    this.setState({
+      sort: e.target.value,
+    })
+  };
 
   render() {
-    const { stocks } = this.state;
+    const { stocks, sort } = this.state;
+    const [key, type] = sort.split(':');
+    let sortedStocks = [...stocks];
+
+    if (key === 'default') {
+      sortedStocks = this.stocks || [];
+    } else {
+      const ratio = TYPE_MAP[type] || 1;
+      sortedStocks = stocks.sort((s1, s2) => (s1[key] - s2[key]) * ratio);
+    }
+
     return (
       <div className="stock-list-wrap">
         <h2>STOCK HELPER</h2>
         <div>
-          sort by 
+          sort by
           <select onChange={this.handleSortChange}>
-            <option value="earn:asce">盈亏⬆</option>
-            <option value="earn:desc">盈亏⬇</option>
-            <option value="opel">Opel</option>
-            <option value="audi">Audi</option>
+            <option value="default">default</option>
+            <option value="earnRate:asce">盈亏⬆</option>
+            <option value="earnRate:desc">盈亏⬇</option>
           </select>
         </div>
         <div>
-          {stocks.map(stock => (
+          {sortedStocks.map(stock => (
             <StockItem key={stock.code} data={stock} />
           ))}
         </div>

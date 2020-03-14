@@ -24,3 +24,7 @@ export function genFnForBC(stocks = []) {
     return stock;
   });
 }
+
+export function soryBy(key, type) {
+  
+}

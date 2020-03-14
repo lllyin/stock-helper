@@ -39,7 +39,7 @@ export default class StockItem extends Component {
     const earningsPerShare = data.price - data.costPrice;
     const earningCls = caclClass(earningsPerShare);
 
-    console.log('data', data, data.name);
+    // console.log('data', data, data.name);
     return (
       <div className="stock-item">
         <h3>{data.name}</h3>
