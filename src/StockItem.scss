@@ -1,0 +1,28 @@
+.stock-item {
+  .white-blank {
+    height: 8px;
+  }
+  .stock-spc-item {
+    margin-top: 5px;
+  }
+  .stock-item-label {
+    display: inline-block;
+    width: 80px;
+    text-align: right;
+    padding: 0 8px;
+  }
+  .stock-item-value {
+    &.link {
+      cursor: pointer;
+    }
+    &.red {
+      color: #f54545;
+    }
+    &.green {
+      color: #0f990f;
+    }
+    &.default {
+      color: #666;
+    }
+  }
+}
