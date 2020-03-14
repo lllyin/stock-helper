@@ -28,3 +28,31 @@ export function genFnForBC(stocks = []) {
 export function soryBy(key, type) {
   
 }
+
+/**
+ * 根据反比函数公式，求一个最小近似值
+ * @param {*} formula 公式，变量为x
+ * @param {*} targetValue 目标值
+ */
+export function calcFnResult(formula = '', targetValue) {
+  const ratio = 100;
+  let i = 1;
+  let flag = true;
+  let realValue = targetValue;
+
+  while(flag) {
+    const formulaStr  = formula.replace(/x/g, `*${ratio * i}`);
+    const result = eval(formulaStr);
+    if(result <= targetValue) {
+      realValue = result;
+      flag = false;
+    } else {
+      i++;
+    }
+    // 设置边界值，大于100不在循环，避免进入死循环
+    if(i > 100) {
+      flag = false;
+    }
+  }
+  return { x: ratio*i, targetValue, realValue };
+}

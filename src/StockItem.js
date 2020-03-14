@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { calcFnResult } from './utils/common';
+import { EXPECT_LOSS_RATE } from './constants';
 
 import './StockItem.scss';
 
@@ -39,7 +41,12 @@ export default class StockItem extends Component {
     const earningsPerShare = data.price - data.costPrice;
     const earningCls = caclClass(earningsPerShare);
 
-    // console.log('data', data, data.name);
+    // 计算达到预期亏损的补仓建议
+    let advice = {};
+    if (earningsPerShare < 0 && data.earnRate <= -0.059) {
+      advice = calcFnResult(data.bcFn, EXPECT_LOSS_RATE);
+    }
+
     return (
       <div className="stock-item">
         <h3>{data.name}</h3>
@@ -56,9 +63,7 @@ export default class StockItem extends Component {
         </div>
         <div className="stock-spc-item">
           <label className="stock-item-label">盈亏:</label>
-          <span className={`stock-item-value ${earningCls}`}>
-            {((earningsPerShare / data.costPrice) * 100).toFixed(3)}%
-          </span>
+          <span className={`stock-item-value ${earningCls}`}>{(data.earnRate * 100).toFixed(3)}%</span>
         </div>
         <div className="stock-spc-item">
           <label className="stock-item-label">成本:</label>
@@ -73,6 +78,17 @@ export default class StockItem extends Component {
           <label className="stock-item-label">涨幅:</label>
           <span className={`stock-item-value ${caclClass(data.percent)}`}>{(data.percent * 100).toFixed(2)}%</span>
         </div>
+        <div className="white-blank"></div>
+        {advice.x && (
+          <div className="stock-spc-item advice-item">
+            <label className="stock-item-label">建议:</label>
+            <span className="stock-item-value advice-value">
+              目前您的亏损超过了6%。建议补仓<b className="mark">{advice.x}</b>手， 需要资金
+              <b className="mark">¥{data.price * advice.x}</b>, 可将亏损降至
+              <b className="mark">{(advice.realValue * 100).toFixed(3)}%</b>。
+            </span>
+          </div>
+        )}
       </div>
     );
   }

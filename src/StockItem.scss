@@ -11,8 +11,14 @@
     text-align: right;
     padding: 0 8px;
   }
+  .advice-value {
+    color: #555;
+  }
   .stock-item-value {
     word-break: break-all;
+    .mark {
+      color: orange;
+    }
     &.link {
       cursor: pointer;
     }

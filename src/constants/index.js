@@ -4,6 +4,9 @@ export const API_BASE_URL = 'https://api.money.126.net/data/feed/';
 // 刷新间隔（毫秒）
 export const UPDATE_INTERVAL = 5000;
 
+// 期望承受亏损比率
+export const EXPECT_LOSS_RATE = 0.03;
+
 // 持仓股
 export const STOCKS = [
   {
