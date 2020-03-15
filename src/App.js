@@ -1,5 +1,5 @@
 import React from 'react';
-import Stock from './Stock';
+import Stock from './components/Stock';
 
 import './App.scss';
 

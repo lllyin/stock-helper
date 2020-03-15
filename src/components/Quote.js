@@ -1,6 +1,6 @@
 /* eslint-disable no-script-url */
 import React, { Component } from 'react';
-import { API_QUOTE_URL } from './constants';
+import { API_QUOTE_URL } from '../constants';
 
 const $ = window.$;
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { calcFnResult } from './utils/common';
-import { EXPECT_LOSS_RATE } from './constants';
+import { calcFnResult } from '../utils/common';
+import { EXPECT_LOSS_RATE } from '../constants';
 
 import './StockItem.scss';
 

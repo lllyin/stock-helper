@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import StockItem from './StockItem';
-import { getStockCodes } from './utils/common';
-import { API_BASE_URL, STOCKS, UPDATE_INTERVAL } from './constants';
+import { getStockCodes } from '../utils/common';
+import { API_BASE_URL, STOCKS, UPDATE_INTERVAL } from '../constants';
 // import MOCK_DATA from './mockdata';
 
 import './Stock.scss';
