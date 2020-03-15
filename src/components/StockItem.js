@@ -17,15 +17,17 @@ function caclClass(number) {
 function calcLink(data) {
   const bcLinkData = [
     { type: 0, eq: data.bcFn, color: '#13AD13' },
-    { type: 1000, window: ['-300', '1500', '0', '0.2'] },
+    { type: 1000, window: ['-200', '1500', '0', String(Math.abs(data.earnRate*1.5.toFixed(2)))] },
   ];
   const jcLinkData = [
     { type: 0, eq: data.jcFn, color: '#ED1717' },
-    { type: 1000, window: ['-100', '500', '-0.1', '0.2'] },
+    { type: 1000, window: ['-100', '500', '0', String(Math.abs(data.earnRate*1.5.toFixed(2)))] },
   ];
   const linkData = data.costPrice > data.price ? bcLinkData : jcLinkData;
+  // replace这一步是因为绘图网站http://fooplot.com的base64算法使用-代替=填充
+  const base64 = window.btoa(JSON.stringify(linkData)).replace(/=/g, '-');
 
-  return `http://fooplot.com/#${window.btoa(JSON.stringify(linkData))}`;
+  return `http://fooplot.com/#${base64}`;
 }
 
 export default class StockItem extends Component {

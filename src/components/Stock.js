@@ -107,7 +107,7 @@ export default class Stock extends Component {
       <div className="stock-list-wrap">
         <h2>STOCK HELPER</h2>
         <div>
-          sort by
+          sort by 
           <select onChange={this.handleSortChange}>
             <option value="default">default</option>
             <option value="earnRate:asce">盈亏⬆</option>
