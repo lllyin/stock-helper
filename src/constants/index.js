@@ -1,5 +1,8 @@
-// 第三方股市api
+// 第三方股市报价api
 export const API_BASE_URL = 'https://api.money.126.net/data/feed/';
+
+// 第三方股市财务api
+export const API_QUOTE_URL = 'https://stock.xueqiu.com/v5/stock/quote.json';
 
 // 刷新间隔（毫秒）
 export const UPDATE_INTERVAL = 5000;
