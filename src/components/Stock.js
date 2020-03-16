@@ -158,11 +158,14 @@ export default class Stock extends Component {
               <option value="default">default</option>
               <option value="earnRate:asce">盈亏⬆</option>
               <option value="earnRate:desc">盈亏⬇</option>
+              <option value="percent:asce">涨幅⬆</option>
+              <option value="percent:desc">涨幅⬇</option>
             </select>
           </div>
           <div className="position-tool" onClick={() => this.hanldPostionClick(showPostion ? 'save' : 'edit')}>
             <span>{showPostion ? '保存' : '持仓'}</span>
-            <img src={showPostion ? SaveIconSrc : EditIconSrc} alt="edit-icon" />
+            <img src={SaveIconSrc} alt="save" style={{display: showPostion ? 'block': 'none'}} />
+            <img src={EditIconSrc} alt="edit" style={{display: showPostion ? 'none': 'block'}} />
           </div>
         </div>
         {showPostion && (
