@@ -5,7 +5,6 @@ import { API_BASE_URL, UPDATE_INTERVAL } from '../constants';
 import EditIconSrc from '../images/edit-icon.svg';
 import SaveIconSrc from '../images/save-icon.svg';
 import Position from './Position';
-import MOCK_DATA from '../constants/mockdata';
 
 import './Stock.scss';
 
@@ -29,10 +28,10 @@ export default class Stock extends Component {
 
   componentDidMount() {
     initData();
-    // this.fetchStocks();
-    this.setSotcks(MOCK_DATA);
+    
+    this.fetchStocks();
     setInterval(() => {
-      // this.fetchStocks();
+      this.fetchStocks();
     }, UPDATE_INTERVAL);
   }
 
@@ -108,7 +107,7 @@ export default class Stock extends Component {
     if (type === 'save') {
       const localStocks = formatToLocalStocks(this.core.stocks);
       localStorage.setItem('stocks', JSON.stringify(localStocks));
-      this.setSotcks(MOCK_DATA);
+      this.fetchStocks();
     }
   };
 
