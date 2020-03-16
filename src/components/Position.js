@@ -37,13 +37,13 @@ export default class Position extends Component {
   handleAddRowClick = () => {
     const { onAdd } = this.props;
     if (this.stocks.length <= 0) {
-      alert('你还有填写的数据');
+      alert('请把上方的数据填写完整，再添加新的一条～');
       return;
     }
     const lastStock = this.stocks.slice(this.stocks.length - 1)[0];
 
     if (lastStock.type || !lastStock.symbol || !lastStock.costPrice || !lastStock.position) {
-      alert('你还有填写的数据');
+      alert('请把上方的数据填写完整，再添加新的一条～');
       return;
     }
 
