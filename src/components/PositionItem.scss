@@ -25,5 +25,15 @@
   }
   .position-show-item {
     padding: 0 5px;
+    .stock-postion {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .delete-btn {
+        width: 25px;
+        height: 25px;
+        color: #ccc;
+      }
+    }
   }
 }

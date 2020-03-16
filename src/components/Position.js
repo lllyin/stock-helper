@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PositionItem from './PositionItem';
+import AddIconSrc from '../images/add-icon.svg';
 
 import './Position.scss';
 
@@ -11,23 +12,53 @@ export default class Position extends Component {
     core && core(this);
   }
 
-  handleComplete = data => {
-    const { stocks = [] } = this.props;
-    this.stocks = stocks;
-    const stocksMap = stocks.reduce((map, stock) => {
-      map[stock.code] = stock;
+  handleComplete = (data, index) => {
+    const { stocks = [], onItemComplete } = this.props;
+    const stocksMap = stocks.reduce((map, stock, index) => {
+      stock.index = index;
+      map[stock.symbol] = stock;
       return map;
     }, {});
 
-    if(stocksMap[data.code]) {
+    const sameCodeStocks = Object.values(stocksMap).filter(v => String(v.symbol) === String(data.symbol));
+
+    if (sameCodeStocks.length > 1) {
       alert('该股票已存在了，你可以点击修改~');
     } else {
-      this.stocks.push(data);
+      data.index = index;
+      stocksMap[data.symbol] = data;
+
+      this.stocks = Object.values(stocksMap).sort((a, b) => a.index - b.index);
+      onItemComplete && onItemComplete(data, this.stocks);
     }
+  };
+
+  // 点击添加一行按钮
+  handleAddRowClick = () => {
+    const { onAdd } = this.props;
+    if (this.stocks.length <= 0) {
+      alert('你还有填写的数据');
+      return;
+    }
+    const lastStock = this.stocks.slice(this.stocks.length - 1)[0];
+
+    if (lastStock.type || !lastStock.symbol || !lastStock.costPrice || !lastStock.position) {
+      alert('你还有填写的数据');
+      return;
+    }
+
+    onAdd && onAdd(this.stocks);
+  };
+
+  onDelete = data => {
+    const { onDelete } = this.props;
+
+    onDelete && onDelete(data);
   };
 
   render() {
     const { stocks } = this.props;
+
     return (
       <div className="stocks-list-wrap">
         <div className="postion-list-header">
@@ -36,10 +67,25 @@ export default class Position extends Component {
           <div className="th">成本</div>
           <div className="th">持仓</div>
         </div>
-        {stocks.map(stock => (
-          <PositionItem key={stock.code} data={stock}  onComplete={this.handleComplete} />
+        {stocks.map((stock, index) => (
+          <PositionItem
+            key={stock.symbol}
+            data={stock}
+            onComplete={data => this.handleComplete(data, index)}
+            onDelete={this.onDelete}
+          />
         ))}
-        {/* <PositionItem data={{}} edit={true} onComplete={this.handleComplete} /> */}
+        <PositionItem
+          key={stocks.length}
+          data={{}}
+          edit={true}
+          onComplete={data => this.handleComplete(data, stocks.length)}
+        />
+        <div className="add-line">
+          <div className="add-line-btn" onClick={this.handleAddRowClick}>
+            <img src={AddIconSrc} alt="add btn" />
+          </div>
+        </div>
       </div>
     );
   }

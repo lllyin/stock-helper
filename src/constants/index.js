@@ -15,7 +15,7 @@ export const STOCKS = [
   {
     name: '伊利股份',
     // 股票代码
-    code: '600887',
+    symbol: '600887',
     // 成本价
     costPrice: 30.243,
     // 仓位，多少股
@@ -24,7 +24,7 @@ export const STOCKS = [
   {
     name: '中国平安',
     // 股票代码
-    code: '601318',
+    symbol: '601318',
     // 成本价
     costPrice: 77.987,
     // 仓位，多少股
@@ -33,7 +33,7 @@ export const STOCKS = [
   {
     name: '格力电器',
     // 股票代码
-    code: '000651',
+    symbol: '000651',
     // 成本价
     costPrice: 60.625,
     // 仓位，多少股
@@ -42,7 +42,7 @@ export const STOCKS = [
   {
     name: '东山精密',
     // 股票代码
-    code: '002384',
+    symbol: '002384',
     // 成本价
     costPrice: 28.213,
     // 仓位，多少股
@@ -51,7 +51,7 @@ export const STOCKS = [
   {
     name: '华天科技',
     // 股票代码
-    code: '002185',
+    symbol: '002185',
     // 成本价
     costPrice: 12.870,
     // 仓位，多少股
@@ -60,7 +60,7 @@ export const STOCKS = [
   {
     name: '华新水泥',
     // 股票代码
-    code: '600801',
+    symbol: '600801',
     // 成本价
     costPrice: 23.813,
     // 仓位，多少股
@@ -69,7 +69,7 @@ export const STOCKS = [
   {
     name: '海螺水泥',
     // 股票代码
-    code: '600585',
+    symbol: '600585',
     // 成本价
     costPrice: 51.851,
     // 仓位，多少股

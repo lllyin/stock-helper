@@ -1,3 +1,5 @@
+import { STOCKS } from '../constants';
+
 // 对股票id进行处理
 export function getStockCodes(stocks = []) {
   return stocks.map((code) => {
@@ -55,4 +57,24 @@ export function calcFnResult(formula = '', targetValue) {
     }
   }
   return { x: ratio*i, targetValue, realValue };
+}
+
+//格式华
+export function formatToLocalStocks(stocks = []) {
+  return stocks.map(stock => ({
+    name: stock.name,
+    symbol: stock.symbol,
+    costPrice: stock.costPrice,
+    position: stock.position,
+  }))
+}
+
+export function initData() {
+  if(!localStorage.getItem('pageView')) {
+    localStorage.setItem('stocks', JSON.stringify(STOCKS));
+    localStorage.setItem('pageView', 1);
+  } else {
+    const pageView = localStorage.getItem('pageView');
+    localStorage.setItem('pageView', Number(pageView) + 1);
+  }
 }

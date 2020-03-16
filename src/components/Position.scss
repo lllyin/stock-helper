@@ -15,4 +15,14 @@
       flex: 1;
     }
   }
+  .add-line-btn {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center ;
+    cursor: pointer;
+    > img {
+      width: 25px;
+      height: 25px;
+    }
+  }
 }

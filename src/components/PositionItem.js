@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
+import DeleteIconSrc from '../images/delete-icon.svg';
 
 import './PositionItem.scss';
 
 const SCHEMA = {
   name: {
-    required: true,
+    required: false,
   },
-  code: {
+  symbol: {
     required: true,
   },
   costPrice: {
     required: true,
+    min: 1,
   },
-  postion: {
+  position: {
     required: true,
+    min: 100,
   },
 };
 
@@ -25,7 +28,7 @@ export default class PostionItem extends Component {
   // handle input item change
   handleInputChange = (key, e) => {
     const { stock } = this.state;
-    console.log('e', e.target.value);
+
     this.setState(
       {
         stock: {
@@ -37,8 +40,7 @@ export default class PostionItem extends Component {
         const { onComplete } = this.props;
         const isValid = this.validateShema();
 
-        isValid && onComplete({...this.state.stock});
-        console.log('isValid', isValid);
+        isValid && onComplete({ ...this.state.stock });
       },
     );
   };
@@ -57,6 +59,12 @@ export default class PostionItem extends Component {
     });
   };
 
+  onDelete = e => {
+    const { onDelete, data } = this.props;
+
+    onDelete && onDelete(data, e);
+  };
+
   render() {
     const { edit = false, data = {} } = this.props;
     return (
@@ -64,24 +72,47 @@ export default class PostionItem extends Component {
         {edit ? (
           <div className="position-edit-item">
             <div className="col stock-name">
-              <input type="text" placeholder="[可填]名称" onChange={e => this.handleInputChange('name', e)} />
+              <input
+                type="text"
+                defaultValue={data.name || ''}
+                placeholder="[可填]名称"
+                onChange={e => this.handleInputChange('name', e)}
+              />
             </div>
             <div className="col stock-code">
-              <input type="text" placeholder="* 代码" onChange={e => this.handleInputChange('code', e)} />
+              <input
+                type="text"
+                defaultValue={data.symbol || ''}
+                placeholder="* 代码"
+                onChange={e => this.handleInputChange('symbol', e)}
+              />
             </div>
             <div className="col stock-cost-price">
-              <input type="number" placeholder="* 成本" onChange={e => this.handleInputChange('costPrice', e)} />
+              <input
+                type="number"
+                defaultValue={data.costPrice || ''}
+                placeholder="* 成本"
+                onChange={e => this.handleInputChange('costPrice', e)}
+              />
             </div>
             <div className="col stock-postion">
-              <input type="number" placeholder="* 持仓(股)" onChange={e => this.handleInputChange('postion', e)} />
+              <input
+                type="number"
+                defaultValue={data.position || ''}
+                placeholder="* 持仓(股)"
+                onChange={e => this.handleInputChange('position', e)}
+              />
             </div>
           </div>
         ) : (
           <div className="position-show-item">
             <div className="col stock-name">{data.name}</div>
-            <div className="col stock-code">{data.code}</div>
+            <div className="col stock-code">{data.symbol}</div>
             <div className="col stock-cost-price">{data.costPrice}</div>
-            <div className="col stock-postion">{data.position}</div>
+            <div className="col stock-postion">
+              <span>{data.position}</span>
+              <img className="delete-btn" src={DeleteIconSrc} alt="delete" onClick={this.onDelete} />
+            </div>
           </div>
         )}
       </div>
