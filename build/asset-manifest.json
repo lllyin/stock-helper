@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/stock-helper/build/static/css/main.1cbeb99e.chunk.css",
-    "main.js": "/stock-helper/build/static/js/main.b8ca015e.chunk.js",
-    "main.js.map": "/stock-helper/build/static/js/main.b8ca015e.chunk.js.map",
+    "main.css": "/stock-helper/build/static/css/main.a217830b.chunk.css",
+    "main.js": "/stock-helper/build/static/js/main.ecdb0d1b.chunk.js",
+    "main.js.map": "/stock-helper/build/static/js/main.ecdb0d1b.chunk.js.map",
     "runtime-main.js": "/stock-helper/build/static/js/runtime-main.c8110caa.js",
     "runtime-main.js.map": "/stock-helper/build/static/js/runtime-main.c8110caa.js.map",
-    "static/js/2.294027d9.chunk.js": "/stock-helper/build/static/js/2.294027d9.chunk.js",
-    "static/js/2.294027d9.chunk.js.map": "/stock-helper/build/static/js/2.294027d9.chunk.js.map",
+    "static/js/2.d89c1ca7.chunk.js": "/stock-helper/build/static/js/2.d89c1ca7.chunk.js",
+    "static/js/2.d89c1ca7.chunk.js.map": "/stock-helper/build/static/js/2.d89c1ca7.chunk.js.map",
     "index.html": "/stock-helper/build/index.html",
-    "precache-manifest.a35e24d142764360af44aba324a68f82.js": "/stock-helper/build/precache-manifest.a35e24d142764360af44aba324a68f82.js",
+    "precache-manifest.6057ab7fd99b4965fb40cfc25e9ebdc2.js": "/stock-helper/build/precache-manifest.6057ab7fd99b4965fb40cfc25e9ebdc2.js",
     "service-worker.js": "/stock-helper/build/service-worker.js",
-    "static/css/main.1cbeb99e.chunk.css.map": "/stock-helper/build/static/css/main.1cbeb99e.chunk.css.map",
-    "static/js/2.294027d9.chunk.js.LICENSE.txt": "/stock-helper/build/static/js/2.294027d9.chunk.js.LICENSE.txt",
+    "static/css/main.a217830b.chunk.css.map": "/stock-helper/build/static/css/main.a217830b.chunk.css.map",
+    "static/js/2.d89c1ca7.chunk.js.LICENSE.txt": "/stock-helper/build/static/js/2.d89c1ca7.chunk.js.LICENSE.txt",
     "static/media/add-icon.svg": "/stock-helper/build/static/media/add-icon.4f995bf3.svg",
     "static/media/delete-icon.svg": "/stock-helper/build/static/media/delete-icon.7d8cde5e.svg",
     "static/media/edit-icon.svg": "/stock-helper/build/static/media/edit-icon.47681e14.svg",
@@ -19,8 +19,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.c8110caa.js",
-    "static/js/2.294027d9.chunk.js",
-    "static/css/main.1cbeb99e.chunk.css",
-    "static/js/main.b8ca015e.chunk.js"
+    "static/js/2.d89c1ca7.chunk.js",
+    "static/css/main.a217830b.chunk.css",
+    "static/js/main.ecdb0d1b.chunk.js"
   ]
 }
