@@ -1,2 +1,18 @@
 .stock-list-wrap {
+  .tools-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .sort-tool {
+    }
+    .position-tool {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      > img {
+        width: 25px;
+        height: 25px;
+      }
+    }
+  }
 }

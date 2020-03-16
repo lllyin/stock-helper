@@ -17,11 +17,11 @@ function caclClass(number) {
 function calcLink(data) {
   const bcLinkData = [
     { type: 0, eq: data.bcFn, color: '#13AD13' },
-    { type: 1000, window: ['-200', '1500', '0', String(Math.abs(data.earnRate*1.5.toFixed(2)))] },
+    { type: 1000, window: ['-200', '1500', '0', String(Math.abs(data.earnRate * (1.5).toFixed(2)))] },
   ];
   const jcLinkData = [
     { type: 0, eq: data.jcFn, color: '#ED1717' },
-    { type: 1000, window: ['-100', '500', '0', String(Math.abs(data.earnRate*1.5.toFixed(2)))] },
+    { type: 1000, window: ['-100', '500', '0', String(Math.abs(data.earnRate * (1.5).toFixed(2)))] },
   ];
   const linkData = data.costPrice > data.price ? bcLinkData : jcLinkData;
   // replace这一步是因为绘图网站http://fooplot.com的base64算法使用-代替=填充
@@ -85,8 +85,9 @@ export default class StockItem extends Component {
           <div className="stock-spc-item advice-item">
             <label className="stock-item-label">建议:</label>
             <span className="stock-item-value advice-value">
-              目前您的亏损超过了6%。建议补仓<b className="mark">{advice.x}</b>手， 需要资金
-              <b className="mark">¥{data.price * advice.x}</b>, 可将亏损降至
+              目前您的亏损超过了{Math.floor(Math.abs(data.earnRate) * 100)}%。建议补仓<b className="mark">{advice.x}</b>
+              手， 需要资金
+              <b className="mark">¥{Math.ceil(data.price * advice.x)}</b>, 可将亏损降至
               <b className="mark">{(advice.realValue * 100).toFixed(3)}%</b>。
             </span>
           </div>

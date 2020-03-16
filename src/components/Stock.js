@@ -3,6 +3,8 @@ import StockItem from './StockItem';
 import { getStockCodes } from '../utils/common';
 import { API_BASE_URL, STOCKS, UPDATE_INTERVAL } from '../constants';
 // import MOCK_DATA from './mockdata';
+import EditIconSrc from '../images/edit-icon.svg';
+import Position from './Position';
 
 import './Stock.scss';
 
@@ -20,6 +22,7 @@ export default class Stock extends Component {
     this.state = {
       stocks: [],
       sort: 'default',
+      showPostion: false,
     };
   }
 
@@ -38,7 +41,7 @@ export default class Stock extends Component {
   fetchStocks() {
     const stockCodes = STOCKS.map(stock => String(stock.code));
     const _this = this;
-    
+
     $ &&
       $.ajax({
         type: 'GET',
@@ -88,11 +91,21 @@ export default class Stock extends Component {
   handleSortChange = e => {
     this.setState({
       sort: e.target.value,
-    })
+    });
+  };
+
+  hanldPostionClick = (type) => {
+    console.log('click', type);
+    this.setState({
+      showPostion: !this.state.showPostion,
+    });
+    if(type === 'save') {
+      console.log('持仓', this.core.stocks);
+    }
   };
 
   render() {
-    const { stocks, sort } = this.state;
+    const { stocks, sort, showPostion } = this.state;
     const [key, type] = sort.split(':');
     let sortedStocks = [...stocks];
 
@@ -106,14 +119,21 @@ export default class Stock extends Component {
     return (
       <div className="stock-list-wrap">
         <h2>STOCK HELPER</h2>
-        <div>
-          sort by 
-          <select onChange={this.handleSortChange}>
-            <option value="default">default</option>
-            <option value="earnRate:asce">盈亏⬆</option>
-            <option value="earnRate:desc">盈亏⬇</option>
-          </select>
+        <div className="tools-box">
+          <div className="sort-tool">
+            sort by
+            <select onChange={this.handleSortChange}>
+              <option value="default">default</option>
+              <option value="earnRate:asce">盈亏⬆</option>
+              <option value="earnRate:desc">盈亏⬇</option>
+            </select>
+          </div>
+          <div className="position-tool" onClick={() => this.hanldPostionClick(showPostion ? 'save' : 'edit')}>
+            <span>{showPostion ? '保存' : '持仓'}</span>
+            <img src={EditIconSrc} alt="edit-icon" />
+          </div>
         </div>
+        {showPostion && <Position core={core => this.core = core} stocks={this.stocks || []} />}
         <div>
           {sortedStocks.map(stock => (
             <StockItem key={stock.code} data={stock} />

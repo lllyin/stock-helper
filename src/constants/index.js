@@ -5,7 +5,7 @@ export const API_BASE_URL = 'https://api.money.126.net/data/feed/';
 export const API_QUOTE_URL = 'https://stock.xueqiu.com/v5/stock/quote.json';
 
 // 刷新间隔（毫秒）
-export const UPDATE_INTERVAL = 5000;
+export const UPDATE_INTERVAL = 3000;
 
 // 期望承受亏损比率
 export const EXPECT_LOSS_RATE = 0.03;

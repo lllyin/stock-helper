@@ -1,0 +1,29 @@
+.postion-item-box {
+  .position-edit-item,
+  .position-show-item {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    .col {
+      flex: 1;
+      height: 42px;
+      line-height: 42px;
+    }
+  }
+  .position-edit-item {
+    .col {
+      padding: 0 5px;
+    }
+    input {
+      width: 100%;
+      max-width: 100px;
+      font-size: 15px;
+      outline: none;
+      border: none;
+      border-bottom: 1px solid #555;
+    }
+  }
+  .position-show-item {
+    padding: 0 5px;
+  }
+}
