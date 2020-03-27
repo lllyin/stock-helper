@@ -28,7 +28,7 @@ export default class Stock extends Component {
 
   componentDidMount() {
     initData();
-    
+
     this.fetchStocks();
     setInterval(() => {
       this.fetchStocks();
@@ -46,6 +46,7 @@ export default class Stock extends Component {
     const _this = this;
 
     $ &&
+      stockCodes.length > 0 &&
       $.ajax({
         type: 'GET',
         dataType: 'jsonp',
@@ -164,8 +165,8 @@ export default class Stock extends Component {
           </div>
           <div className="position-tool" onClick={() => this.hanldPostionClick(showPostion ? 'save' : 'edit')}>
             <span>{showPostion ? '保存' : '持仓'}</span>
-            <img src={SaveIconSrc} alt="save" style={{display: showPostion ? 'block': 'none'}} />
-            <img src={EditIconSrc} alt="edit" style={{display: showPostion ? 'none': 'block'}} />
+            <img src={SaveIconSrc} alt="save" style={{ display: showPostion ? 'block' : 'none' }} />
+            <img src={EditIconSrc} alt="edit" style={{ display: showPostion ? 'none' : 'block' }} />
           </div>
         </div>
         {showPostion && (
