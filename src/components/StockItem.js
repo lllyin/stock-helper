@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { calcFnResult } from '../utils/common';
-import { EXPECT_LOSS_RATE } from '../constants';
 
 import './StockItem.scss';
 
@@ -43,11 +41,9 @@ export default class StockItem extends Component {
     const earningsPerShare = data.price - data.costPrice;
     const earningCls = caclClass(earningsPerShare);
 
+
     // 计算达到预期亏损的补仓建议
-    let advice = {};
-    if (earningsPerShare < 0 && data.earnRate <= -0.059) {
-      advice = calcFnResult(data.bcFn, EXPECT_LOSS_RATE);
-    }
+    let { advice } = data;
 
     return (
       <div className="stock-item">

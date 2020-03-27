@@ -8,7 +8,10 @@ export const API_QUOTE_URL = 'https://stock.xueqiu.com/v5/stock/quote.json';
 export const UPDATE_INTERVAL = 3000;
 
 // 期望承受亏损比率
-export const EXPECT_LOSS_RATE = 0.03;
+export const EXPECT_LOSS_RATE = -0.03;
+
+// 亏损建议值： 当亏损率为该值，计算建议
+export const ADVICE_LOSS_RATE = -0.059;
 
 // 持仓股
 export const STOCKS = [

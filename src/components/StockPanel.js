@@ -23,7 +23,7 @@ export default function StockPanel(props) {
     setExpanded(isExpanded ? panel : false);
   };
 
-  const { map, list } = props;
+  const { map, list, onSave } = props;
 
   return (
     <ExpansionPanel expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
@@ -34,7 +34,7 @@ export default function StockPanel(props) {
           </Typography> */}
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
-        <StockList map={map} list={list} />
+        <StockList map={map} list={list} onSave={onSave} />
       </ExpansionPanelDetails>
     </ExpansionPanel>
   );

@@ -1,4 +1,5 @@
-import { STOCKS } from '../constants';
+import Big from 'big.js';
+import { STOCKS, EXPECT_LOSS_RATE, ADVICE_LOSS_RATE } from '../constants';
 
 // 对股票id进行处理
 export function getStockCodes(stocks = []) {
@@ -43,6 +44,7 @@ export function calcFnResult(formula = '', targetValue) {
 
   while (flag) {
     const formulaStr = formula.replace(/x/g, `*${ratio * i}`);
+    // eslint-disable-next-line no-eval
     const result = eval(formulaStr);
     if (result <= targetValue) {
       realValue = result;
@@ -55,7 +57,7 @@ export function calcFnResult(formula = '', targetValue) {
       flag = false;
     }
   }
-  return { x: ratio * i, targetValue, realValue };
+  return { x: ratio * i, y: realValue, targetValue, realValue };
 }
 
 //格式华
@@ -78,6 +80,7 @@ export function initData() {
   }
 }
 
+// 合并本地和接口数据
 export function mergeStocks(serverStocks) {
   const localStockStr = localStorage.getItem('stocks');
   const STOCKS = localStockStr ? JSON.parse(localStockStr) : [];
@@ -92,6 +95,8 @@ export function mergeStocks(serverStocks) {
         ...localStock,
         ...stockMap[localStock.symbol],
       };
+      // 每股计算的建议信息
+      let advice = {};
       const { costPrice, price, position } = stockItem;
 
       if (costPrice > price) {
@@ -100,6 +105,13 @@ export function mergeStocks(serverStocks) {
         stockItem.jcFn = `(${(position * price).toFixed(2)}+${price}x)/(${costPrice}*${position}+${price}x)-1`;
       }
       stockItem.earnRate = price / costPrice - 1;
+
+      if (stockItem.earnRate < ADVICE_LOSS_RATE) {
+        advice = calcFnResult(stockItem.bcFn, -EXPECT_LOSS_RATE);
+        advice.amount = (advice.x * stockItem.price).toFixed(2);
+      }
+
+      stockItem.advice = advice;
       return stockItem;
     } else {
       return localStock;
@@ -107,4 +119,41 @@ export function mergeStocks(serverStocks) {
   });
 
   return [...stocks];
+}
+
+// 计算持仓汇总信息
+export function calcStockSummary(stockList) {
+  let summary = {
+    // 市值
+    marketValue: 0,
+    // 成本金额
+    costValue: 0,
+    // 盈亏金额
+    earnMoney: 0,
+    // 平均盈亏率
+    earnRate: 0,
+    // 建议
+    advice: {
+      // 建议流动资金
+      hotMoney: 0,
+    },
+  };
+
+  summary = stockList.reduce((sum, item) => {
+    const adviceAmount = item.advice ? item.advice.amount : 0;
+
+    sum.marketValue = new Big(item.price).times(item.position).plus(sum.marketValue).valueOf();
+
+    sum.costValue = new Big(item.costPrice).times(item.position).plus(sum.costValue).valueOf();
+
+    sum.earnRate = new Big(sum.marketValue).div(sum.costValue).minus(1).toFixed(4).valueOf();
+
+    sum.advice.hotMoney = new Big(sum.advice.hotMoney).plus(Number(adviceAmount || 0)).valueOf();
+
+    return sum;
+  }, summary);
+
+  summary.earnMoney = new Big(summary.marketValue).minus(summary.costValue).valueOf();
+
+  return summary;
 }

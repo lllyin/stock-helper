@@ -41,6 +41,7 @@ export default function StockList(props) {
     if (type === 'save') {
       const localStocks = formatToLocalStocks(StockList.core.stocks);
       localStorage.setItem('stocks', JSON.stringify(localStocks));
+      props.onSave && props.onSave();
     }
   };
 

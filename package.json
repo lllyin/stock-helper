@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.9.5",
     "@material-ui/icons": "^4.9.1",
+    "big.js": "^5.2.2",
     "cra-template": "1.0.2",
     "node-sass": "^4.13.1",
     "react": "^16.13.0",
