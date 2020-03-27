@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PositionItem from './PositionItem';
-import AddIconSrc from '../images/add-icon.svg';
+import AddPostionItem from './AddPostionItem';
 
 import './Position.scss';
 
@@ -34,18 +34,8 @@ export default class Position extends Component {
   };
 
   // 点击添加一行按钮
-  handleAddRowClick = () => {
+  handleAddRowClick = (addStockItem) => {
     const { onAdd } = this.props;
-    if (this.stocks.length <= 0) {
-      alert('请把上方的数据填写完整，再添加新的一条～');
-      return;
-    }
-    const lastStock = this.stocks.slice(this.stocks.length - 1)[0];
-
-    if (lastStock.type || !lastStock.symbol || !lastStock.costPrice || !lastStock.position) {
-      alert('请把上方的数据填写完整，再添加新的一条～');
-      return;
-    }
 
     onAdd && onAdd(this.stocks);
   };
@@ -75,17 +65,13 @@ export default class Position extends Component {
             onDelete={this.onDelete}
           />
         ))}
-        <PositionItem
+        {/*添加行 */}
+        <AddPostionItem
           key={stocks.length}
-          data={{}}
-          edit={true}
+          stocks={stocks}
           onComplete={data => this.handleComplete(data, stocks.length)}
+          onAdd={this.handleAddRowClick}
         />
-        <div className="add-line">
-          <div className="add-line-btn" onClick={this.handleAddRowClick}>
-            <img src={AddIconSrc} alt="add btn" />
-          </div>
-        </div>
       </div>
     );
   }

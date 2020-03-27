@@ -51,7 +51,7 @@ export default class StockItem extends Component {
 
     return (
       <div className="stock-item">
-        <h3>{data.name}</h3>
+        <h3>{data.name || '无名股票'}</h3>
         <div className="stock-spc-item">
           <label className="stock-item-label">{earningsPerShare < 0 ? '补仓函数' : '加仓函数'}:</label>
           <span

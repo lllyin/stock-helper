@@ -106,7 +106,7 @@ export default class PostionItem extends Component {
           </div>
         ) : (
           <div className="position-show-item">
-            <div className="col stock-name">{data.name}</div>
+            <div className="col stock-name">{data.name || ''}</div>
             <div className="col stock-code">{data.symbol}</div>
             <div className="col stock-cost-price">{data.costPrice}</div>
             <div className="col stock-postion">
