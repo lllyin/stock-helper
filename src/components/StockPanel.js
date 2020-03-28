@@ -23,18 +23,15 @@ export default function StockPanel(props) {
     setExpanded(isExpanded ? panel : false);
   };
 
-  const { map, list, onSave } = props;
+  const { map, list, onSave, dispatch } = props;
 
   return (
     <ExpansionPanel expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel2bh-content" id="panel2bh-header">
         <Typography className={classes.heading}>持仓</Typography>
-        {/* <Typography className={classes.secondaryHeading}>
-            You are currently not an owner
-          </Typography> */}
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
-        <StockList map={map} list={list} onSave={onSave} />
+        <StockList map={map} list={list} onSave={onSave} dispatch={dispatch} />
       </ExpansionPanelDetails>
     </ExpansionPanel>
   );

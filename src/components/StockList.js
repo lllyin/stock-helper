@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import StockItem from './StockItem';
 import { formatToLocalStocks } from '../utils/common';
 import EditIconSrc from '../images/edit-icon.svg';
 import SaveIconSrc from '../images/save-icon.svg';
 import Position from './Position';
+import { StockContext } from '../reducers';
 
 import './Stock.scss';
 
@@ -13,12 +14,14 @@ const TYPE_MAP = {
 };
 
 export default function StockList(props) {
+  const { dispatch } = props;
   const [stocks, setStocks] = useState([]);
   const [editStocks, setEditStocks] = useState([]);
-  const [showPostion, setShowPostion] = useState(false);
   const [sort, setSort] = useState('default');
   const [key, type] = sort.split(':');
   let sortedStocks = [...stocks];
+
+  const stockState = useContext(StockContext);
 
   useEffect(() => {
     setStocks(props.list);
@@ -37,11 +40,20 @@ export default function StockList(props) {
 
   // 保存/修改持仓
   const hanldPostionClick = type => {
-    setShowPostion(!showPostion);
+    if(type === 'edit') {
+      dispatch({
+        type: 'SET',
+        payload: {
+          showPostion: !stockState.showPostion,
+          isEdit: true,
+        },
+      });
+    }
     if (type === 'save') {
       const localStocks = formatToLocalStocks(StockList.core.stocks);
       localStorage.setItem('stocks', JSON.stringify(localStocks));
       props.onSave && props.onSave();
+      dispatch({ type: 'SAVE' });
     }
   };
 
@@ -65,6 +77,8 @@ export default function StockList(props) {
     sortedStocks = stocks.sort((s1, s2) => (s1[key] - s2[key]) * ratio);
   }
 
+  const { showPostion } = stockState;
+
   return (
     <div className="stock-list-wrap">
       <div className="tools-box">
@@ -78,7 +92,7 @@ export default function StockList(props) {
           </select>
         </div>
         <div className="position-tool" onClick={() => hanldPostionClick(showPostion ? 'save' : 'edit')}>
-          <span>{showPostion ? '保存' : '修改持仓'}</span>
+          <span>{showPostion ? '保存' : `${stocks.length <= 0 ? '添加' : '修改'}持仓`}</span>
           <img src={SaveIconSrc} alt="save" style={{ display: showPostion ? 'block' : 'none' }} />
           <img src={EditIconSrc} alt="edit" style={{ display: showPostion ? 'none' : 'block' }} />
         </div>

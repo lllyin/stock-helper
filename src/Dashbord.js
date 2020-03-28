@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useReducer, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Reset from './components/Reset';
 import StockPanel from './components/StockPanel';
 import SummaryPanel from './components/SummaryPanel';
 import { API_BASE_URL, UPDATE_INTERVAL } from './constants';
 import { getStockCodes, calcStockSummary, initData, resetData, mergeStocks } from './utils/common';
+import { stockReducer, stockInitData, StockContext } from './reducers';
 
 const $ = window.$;
 const useStyles = makeStyles(theme => ({
@@ -20,6 +21,8 @@ export default function DashBord() {
   const [stocksMap, setStocksMap] = useState({});
   const [stockList, setStockList] = useState([]);
   const [summary, setSummary] = useState({});
+  const [stockState, dispatch] = useReducer(stockReducer, stockInitData);
+  const stockRef = useRef(stockState);
 
   useEffect(() => {
     initData();
@@ -38,8 +41,9 @@ export default function DashBord() {
     const localStockStr = localStorage.getItem('stocks');
     const STOCKS = localStockStr ? JSON.parse(localStockStr) : [];
     const stockCodes = STOCKS.map(stock => String(stock.symbol));
+    const { isEdit } = stockRef.current;
 
-    if(STOCKS.length <= 0)  {
+    if (STOCKS.length <= 0) {
       setStocksMap({});
       setStockList([]);
       setSummary({});
@@ -47,6 +51,7 @@ export default function DashBord() {
     }
 
     $ &&
+      !isEdit &&
       $.ajax({
         type: 'GET',
         dataType: 'jsonp',
@@ -69,18 +74,26 @@ export default function DashBord() {
   }
 
   function handleResetConfirm() {
+    dispatch({
+      type: 'SAVE',
+    });
+    stockRef.current = { ...stockState, showPostion: false, isEdit: false };
     resetData();
     fetchStocks();
   }
 
+  stockRef.current = stockState;
+
   return (
-    <div className={classes.root}>
-      <h2>
-        STOCK HELPER
-        <Reset onConfirm={handleResetConfirm} />
-      </h2>
-      <SummaryPanel map={stocksMap} list={stockList} summary={summary} />
-      <StockPanel map={stocksMap} list={stockList} onSave={handleSave} />
-    </div>
+    <StockContext.Provider value={stockState}>
+      <div className={classes.root}>
+        <h2>
+          STOCK HELPER
+          <Reset onConfirm={handleResetConfirm} />
+        </h2>
+        <SummaryPanel map={stocksMap} list={stockList} summary={summary} />
+        <StockPanel map={stocksMap} list={stockList} onSave={handleSave} dispatch={dispatch} />
+      </div>
+    </StockContext.Provider>
   );
 }
