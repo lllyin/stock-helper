@@ -18,6 +18,9 @@ const useStyles = makeStyles(theme => ({
     flexBasis: '33.33%',
     flexShrink: 0,
   },
+  defaultColor: {
+    color: '#888',
+  },
 }));
 
 export default function SummaryPanel(props) {
@@ -28,29 +31,39 @@ export default function SummaryPanel(props) {
     setExpanded(isExpanded ? panel : false);
   };
 
-  const { summary = {} } = props;
+  const { summary = {}, list = [] } = props;
 
   return (
     <ExpansionPanel className={classes.haha} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel2bh-content" id="panel2bh-header">
         <Typography className={classes.heading}>总览</Typography>
-        {/* <Typography className={classes.secondaryHeading}>
-            You are currently not an owner
-          </Typography> */}
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.detial}>
-        <Typography display="block" paragraph>
-          <span>你持仓的总市值为{summary.marketValue}。</span>
-          <span>总成本为{summary.costValue}。</span>
-          <span>
-            目前{summary.earnMoney >= 0 ? '盈利' : '亏损'} {Math.abs(summary.earnMoney)}元。
-          </span>
-          <span>盈亏率：{summary.earnRate * 100}%。</span>
-        </Typography>
-        {Object.keys(summary.advice || {}).length > 0 && (
-          <Typography display="block" color="error">
-            建议账户保留流动资金{summary.advice?.hotMoney}元，以应对风险。
-          </Typography>
+        {list.length <= 0 ? (
+          <React.Fragment>
+            <Typography display="inline" color="error">
+              请先添加持仓，才能查看总览。
+            </Typography>
+            <Typography display="inline" className={classes.defaultColor} variant="body1">
+              或者点击上方的RESET按钮,参看示例数据。
+            </Typography>
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <Typography display="block" paragraph>
+              <span>你持仓的总市值为{summary.marketValue}。</span>
+              <span>总成本为{summary.costValue}。</span>
+              <span>
+                目前{summary.earnMoney >= 0 ? '盈利' : '亏损'} {Math.abs(summary.earnMoney)}元。
+              </span>
+              <span>盈亏率：{summary.earnRate * 100}%。</span>
+            </Typography>
+            {Object.keys(summary.advice || {}).length > 0 && (
+              <Typography display="block" color="error">
+                建议账户保留流动资金{summary.advice?.hotMoney}元，以应对风险。
+              </Typography>
+            )}
+          </React.Fragment>
         )}
       </ExpansionPanelDetails>
     </ExpansionPanel>

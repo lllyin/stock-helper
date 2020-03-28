@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Reset from './components/Reset';
 import StockPanel from './components/StockPanel';
 import SummaryPanel from './components/SummaryPanel';
 import { API_BASE_URL, UPDATE_INTERVAL } from './constants';
-import { getStockCodes, calcStockSummary, initData, mergeStocks } from './utils/common';
+import { getStockCodes, calcStockSummary, initData, resetData, mergeStocks } from './utils/common';
 
 const $ = window.$;
 const useStyles = makeStyles(theme => ({
@@ -38,8 +39,14 @@ export default function DashBord() {
     const STOCKS = localStockStr ? JSON.parse(localStockStr) : [];
     const stockCodes = STOCKS.map(stock => String(stock.symbol));
 
+    if(STOCKS.length <= 0)  {
+      setStocksMap({});
+      setStockList([]);
+      setSummary({});
+      return;
+    }
+
     $ &&
-      stockCodes.length > 0 &&
       $.ajax({
         type: 'GET',
         dataType: 'jsonp',
@@ -61,8 +68,17 @@ export default function DashBord() {
     fetchStocks();
   }
 
+  function handleResetConfirm() {
+    resetData();
+    fetchStocks();
+  }
+
   return (
     <div className={classes.root}>
+      <h2>
+        STOCK HELPER
+        <Reset onConfirm={handleResetConfirm} />
+      </h2>
       <SummaryPanel map={stocksMap} list={stockList} summary={summary} />
       <StockPanel map={stocksMap} list={stockList} onSave={handleSave} />
     </div>

@@ -69,9 +69,8 @@ export default function StockList(props) {
     <div className="stock-list-wrap">
       <div className="tools-box">
         <div className="sort-tool">
-          sort by
           <select onChange={handleSortChange}>
-            <option value="default">default</option>
+            <option value="default">默认排序</option>
             <option value="earnRate:asce">盈亏⬆</option>
             <option value="earnRate:desc">盈亏⬇</option>
             <option value="percent:asce">涨幅⬆</option>

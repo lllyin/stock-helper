@@ -70,6 +70,7 @@ export function formatToLocalStocks(stocks = []) {
   }));
 }
 
+// 初始化数据
 export function initData() {
   if (!localStorage.getItem('pageView')) {
     localStorage.setItem('stocks', JSON.stringify(STOCKS));
@@ -78,6 +79,11 @@ export function initData() {
     const pageView = localStorage.getItem('pageView');
     localStorage.setItem('pageView', Number(pageView) + 1);
   }
+}
+
+// 重置数据
+export function resetData() {
+  localStorage.setItem('stocks', JSON.stringify(STOCKS));
 }
 
 // 合并本地和接口数据
