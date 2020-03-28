@@ -152,13 +152,12 @@ export function calcStockSummary(stockList) {
 
     sum.costValue = new Big(item.costPrice).times(item.position).plus(sum.costValue).valueOf();
 
-    sum.earnRate = new Big(sum.marketValue).div(sum.costValue).minus(1).toFixed(4).valueOf();
-
     sum.advice.hotMoney = new Big(sum.advice.hotMoney).plus(Number(adviceAmount || 0)).valueOf();
 
     return sum;
   }, summary);
 
+  summary.earnRate = new Big(summary.marketValue).div(summary.costValue).minus(1).toFixed(4).valueOf();
   summary.earnMoney = new Big(summary.marketValue).minus(summary.costValue).valueOf();
 
   return summary;
