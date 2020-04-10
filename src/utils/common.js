@@ -106,9 +106,9 @@ export function mergeStocks(serverStocks) {
       const { costPrice, price, position } = stockItem;
 
       if (costPrice > price) {
-        stockItem.bcFn = `1-(${(position * price).toFixed(2)}+${price}x)/(${costPrice}*${position}+${price}x)`;
+        stockItem.bcFn = `1-(${(position * price).toFixed(2)}+${price}x)/(${(costPrice * position).toFixed(2)}+${price}x)`;
       } else {
-        stockItem.jcFn = `(${(position * price).toFixed(2)}+${price}x)/(${costPrice}*${position}+${price}x)-1`;
+        stockItem.jcFn = `(${(position * price).toFixed(2)}+${price}x)/(${(costPrice * position).toFixed(2)}+${price}x)-1`;
       }
       stockItem.earnRate = price / costPrice - 1;
 

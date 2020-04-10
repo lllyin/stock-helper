@@ -49,12 +49,12 @@ export default class StockItem extends Component {
       <div className={`stock-item ${earningCls}`}>
         <h3>{data.name || '无名股票'}</h3>
         <div className="stock-spc-item">
-          <label className="stock-item-label">当前盈亏</label>
-          <span className={`stock-item-value ${earningCls}`}>{(data.earnRate * data.costPrice * data.position).toFixed(2)}</span>
+          <label className="stock-item-label">盈亏比</label>
+          <span className={`stock-item-value ${earningCls} weight`}>{(data.earnRate * 100).toFixed(3)}%</span>
         </div>
         <div className="stock-spc-item">
-          <label className="stock-item-label">盈亏比</label>
-          <span className={`stock-item-value ${earningCls}`}>{(data.earnRate * 100).toFixed(3)}%</span>
+          <label className="stock-item-label">当前盈亏</label>
+          <span className={`stock-item-value ${earningCls} earn-amount`}>{(data.earnRate * data.costPrice * data.position).toFixed(2)}</span>
         </div>
 
         <div className="white-blank"></div>
@@ -83,7 +83,7 @@ export default class StockItem extends Component {
             }}
           >
             <span className="link">查看</span>
-            <small className="text-weak">(灰色曲线为函数的导数图)</small>
+            {/* <small className="text-weak">(灰色曲线为函数的导数图)</small> */}
           </span>
         </div>
         
