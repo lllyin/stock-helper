@@ -56,7 +56,7 @@ export default function SummaryPanel(props) {
               <span>
                 目前{summary.earnMoney >= 0 ? '盈利' : '亏损'} {Math.abs(summary.earnMoney)}元。
               </span>
-              <span>盈亏率：{summary.earnRate * 100}%。</span>
+              <span>盈亏率：{(summary.earnRate * 100).toFixed(2)}%。</span>
             </Typography>
             {Object.keys(summary.advice || {}).length > 0 && (
               <Typography display="block" color="error">
