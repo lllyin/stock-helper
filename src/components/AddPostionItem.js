@@ -84,19 +84,19 @@ export default class AddPostionItem extends Component {
     return (
       <div className="postion-item-box">
         <div className="position-edit-item">
-          <div className="col stock-name">
+          {/* <div className="col stock-name">
             <input
               type="text"
               value={stock.name || ''}
               placeholder="[可填]名称"
               onChange={e => this.handleInputChange('name', e)}
             />
-          </div>
+          </div> */}
           <div className="col stock-code">
             <input
               type="text"
               defaultValue={stock.symbol || ''}
-              placeholder="* 代码"
+              placeholder="* 股票代码"
               onChange={e => this.handleInputChange('symbol', e)}
             />
           </div>

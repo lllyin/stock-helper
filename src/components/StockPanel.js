@@ -13,6 +13,9 @@ const useStyles = makeStyles(theme => ({
     flexBasis: '33.33%',
     flexShrink: 0,
   },
+  panel: {
+    padding: '8px 18px 24px',
+  }
 }));
 
 export default function StockPanel(props) {
@@ -30,7 +33,7 @@ export default function StockPanel(props) {
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel2bh-content" id="panel2bh-header">
         <Typography className={classes.heading}>持仓</Typography>
       </ExpansionPanelSummary>
-      <ExpansionPanelDetails>
+      <ExpansionPanelDetails className={classes.panel}>
         <StockList map={map} list={list} onSave={onSave} dispatch={dispatch} />
       </ExpansionPanelDetails>
     </ExpansionPanel>

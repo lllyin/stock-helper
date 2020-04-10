@@ -85,10 +85,10 @@ export default function StockList(props) {
         <div className="sort-tool">
           <select onChange={handleSortChange}>
             <option value="default">默认排序</option>
-            <option value="earnRate:asce">盈亏⬆</option>
-            <option value="earnRate:desc">盈亏⬇</option>
-            <option value="percent:asce">涨幅⬆</option>
-            <option value="percent:desc">涨幅⬇</option>
+            <option value="earnRate:asce">盈亏从低到高⬆</option>
+            <option value="earnRate:desc">盈亏从高到低⬇</option>
+            <option value="percent:asce">涨幅从低到高⬆</option>
+            <option value="percent:desc">涨幅从高到低⬇</option>
           </select>
         </div>
         <div className="position-tool" onClick={() => hanldPostionClick(showPostion ? 'save' : 'edit')}>
