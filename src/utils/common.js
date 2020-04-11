@@ -82,8 +82,9 @@ export function initData() {
 }
 
 // 重置数据
-export function resetData() {
-  localStorage.setItem('stocks', JSON.stringify(STOCKS));
+export function resetData(defaultJson = STOCKS) {
+
+  localStorage.setItem('stocks', JSON.stringify(defaultJson));
 }
 
 // 合并本地和接口数据

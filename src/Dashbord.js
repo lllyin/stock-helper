@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useReducer, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Reset from './components/Reset';
+import Import from './components/Import';
 import StockPanel from './components/StockPanel';
 import SummaryPanel from './components/SummaryPanel';
 import { API_BASE_URL, UPDATE_INTERVAL } from './constants';
@@ -12,6 +13,23 @@ const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
   },
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: 20,
+
+    '& .title-box': {
+      marginTop: 0,
+      marginBottom: 0,
+    },
+    '& .import-tool': {
+      cursor: 'pointer',
+      color: '#888',
+      fontSize: 14,
+    }
+  }
 }));
 // 定时器
 let timer = null;
@@ -82,15 +100,32 @@ export default function DashBord() {
     fetchStocks();
   }
 
+  function handleImportConfirm(json) {
+    console.log('handleImportConfirm', json);
+    if(json) {
+      dispatch({
+        type: 'SAVE',
+      });
+      stockRef.current = { ...stockState, showPostion: false, isEdit: false };
+      resetData(json);
+      fetchStocks();
+    }
+  }
+
   stockRef.current = stockState;
 
   return (
     <StockContext.Provider value={stockState}>
       <div className={classes.root}>
-        <h2>
-          STOCK HELPER
-          <Reset onConfirm={handleResetConfirm} />
-        </h2>
+        <div className={classes.header}>
+          <h2 className="title-box">
+            STOCK HELPER
+            <Reset onConfirm={handleResetConfirm} />
+          </h2>
+          <div className="import-tool">
+            <Import onConfirm={handleImportConfirm} />
+          </div>
+        </div>
         <SummaryPanel map={stocksMap} list={stockList} summary={summary} />
         <StockPanel map={stocksMap} list={stockList} onSave={handleSave} dispatch={dispatch} />
       </div>
