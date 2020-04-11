@@ -77,7 +77,7 @@ export default function StockList(props) {
     sortedStocks = stocks.sort((s1, s2) => (s1[key] - s2[key]) * ratio);
   }
 
-  const { showPostion } = stockState;
+  const { showPostion, summary } = stockState;
 
   return (
     <div className="stock-list-wrap">
@@ -108,7 +108,7 @@ export default function StockList(props) {
       )}
       <div className="stock-list flow">
         {sortedStocks.map(stock => (
-          <StockItem key={stock.symbol} data={stock} />
+          <StockItem key={stock.symbol} data={stock} summary={summary} />
         ))}
       </div>
     </div>

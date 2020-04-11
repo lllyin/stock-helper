@@ -77,6 +77,10 @@ export default function DashBord() {
         success: function(serverData, status, xhr) {
           const stockList = mergeStocks(serverData);
           const summary = calcStockSummary(stockList);
+          dispatch({
+            type: 'SET_SUMMARY',
+            payload: summary,
+          })
           setStocksMap(serverData);
           setStockList(stockList);
           setSummary(summary);

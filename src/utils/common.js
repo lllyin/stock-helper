@@ -144,6 +144,19 @@ export function calcStockSummary(stockList) {
       // 建议流动资金
       hotMoney: 0,
     },
+    // 盈亏统计
+    earn: {
+      // 最小盈亏比
+      minRate: 0,
+      // 最大盈亏比
+      maxRate: 0,
+      // 最小盈亏金额
+      minMoney: 0,
+      // 最大盈亏金额
+      maxMoney: 0,
+      // 盈亏比绝对值最大值
+      maxAbsRate: 0,
+    }
   };
 
   summary = stockList.reduce((sum, item) => {
@@ -161,5 +174,23 @@ export function calcStockSummary(stockList) {
   summary.earnRate = new Big(summary.marketValue).div(summary.costValue).minus(1).toFixed(4).valueOf();
   summary.earnMoney = new Big(summary.marketValue).minus(summary.costValue).valueOf();
 
+  if(stockList && stockList.length > 0) {
+    const sortedByEarnRateList = stockList.sort((a, b) => a.earnRate - b.earnRate);
+    // 最小收益股票
+    const minRateStock = sortedByEarnRateList[0];
+    // 最大收益股票
+    const maxRateStock = sortedByEarnRateList[sortedByEarnRateList.length - 1];
+
+    summary.earn.minRate = minRateStock.earnRate;
+    summary.earn.maxRate = maxRateStock.earnRate;
+
+    summary.earn.minMoney = (minRateStock.earnRate * minRateStock.costPrice * minRateStock.position).toFixed(2);
+    summary.earn.maxMoney = (maxRateStock.earnRate * maxRateStock.costPrice * maxRateStock.position).toFixed(2);
+
+    summary.earn.maxAbsRate = Math.max(Math.abs(minRateStock.earnRate), Math.abs(maxRateStock.earnRate));
+
+  }
+
+  console.log('summary', summary);
   return summary;
 }

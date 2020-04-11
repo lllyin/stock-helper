@@ -23,8 +23,58 @@
   }
   .stock-spc-item {
     margin-top: 6px;
+    display: flex;
     &:first-of-type {
       margin-top: 0;
+    }
+  }
+  .earn-rate-item {
+    height: 30px;
+    align-items: center;
+    .stock-item-value {
+      height: 30px;
+      line-height: 30px;
+      text-indent: 6px;
+      color: #fff !important;
+      border-radius: 1px;
+      font-size: 14px;
+      &.red {
+        background-color: #f54545;
+      }
+      &.green {
+        background-color: #0f990f;
+      }
+      &.default {
+        // background-color: #666;
+      }
+    }
+  }
+  .percent-item {
+    position: relative;
+    display: flex;
+    .stock-item-value {
+      position: relative;
+      flex: 1;
+      &.red {
+        .percent-bar {
+          background-color: #f54545;
+        }
+      }
+      &.green {
+        .percent-bar {
+          background-color: #0f990f;
+        }
+      }
+     .percent-bar {
+        position: absolute;
+        left: 0;
+        bottom: -3px;
+        content: '';
+        width: 50px;
+        height: 1px;
+        border-radius: 1px;
+        opacity: 0.6;
+      }
     }
   }
   .stock-item-label {

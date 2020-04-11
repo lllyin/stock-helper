@@ -24,6 +24,9 @@ export function stockReducer(state, action) {
       return stockInit(action.payload);
     case 'SET':
       return { ...state, ...action.payload };
+    case 'SET_SUMMARY': {
+      return { ...state, summary: { ...action.payload } };
+    }
     default:
       return state;
   }

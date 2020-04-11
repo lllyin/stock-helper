@@ -36,7 +36,8 @@ export default class StockItem extends Component {
   }
 
   render() {
-    const { data } = this.props;
+    const { data, summary } = this.props;
+
     // 每股收益
     const earningsPerShare = data.price - data.costPrice;
     const earningCls = caclClass(earningsPerShare);
@@ -45,15 +46,26 @@ export default class StockItem extends Component {
     // 计算达到预期亏损的补仓建议
     let { advice } = data;
 
+    // 所有持仓最大亏损比绝对值
+    const maxAbsEarnRate = summary.earn.maxAbsRate;
+    // 当前持仓亏损比绝对值
+    const currentAbsEarnRate = Math.abs(data.earnRate);
+    // 占比
+    const inPercent = (currentAbsEarnRate / maxAbsEarnRate).toFixed(2);
+
+    const style = {
+      flex: inPercent
+    }
+
     return (
       <div className={`stock-item ${earningCls}`}>
         <h3>{data.name || '无名股票'}</h3>
-        <div className="stock-spc-item">
+        <div className="stock-spc-item earn-rate-item">
           <label className="stock-item-label">盈亏比</label>
-          <span className={`stock-item-value ${earningCls} weight`}>{(data.earnRate * 100).toFixed(3)}%</span>
+          <span className={`stock-item-value ${earningCls} weight`} style={style}>{(data.earnRate * 100).toFixed(3)}%</span>
         </div>
         <div className="stock-spc-item">
-          <label className="stock-item-label">当前盈亏</label>
+          <label className="stock-item-label">{ earningsPerShare >= 0 ? '浮盈' : '浮亏' }</label>
           <span className={`stock-item-value ${earningCls} earn-amount`}>{(data.earnRate * data.costPrice * data.position).toFixed(2)}</span>
         </div>
 
@@ -65,11 +77,14 @@ export default class StockItem extends Component {
         </div>
         <div className="stock-spc-item">
           <label className="stock-item-label">现价</label>
-          <span className="stock-item-value weight">{data.price}</span>
+          <span className="stock-item-value">{data.price}</span>
         </div>
-        <div className="stock-spc-item">
-          <label className="stock-item-label">当前涨幅</label>
-          <span className={`stock-item-value weight ${caclClass(data.percent)}`}>{(data.percent * 100).toFixed(2)}%</span>
+        <div className={`stock-spc-item percent-item`}>
+          <label className="stock-item-label">当前{data.percent >= 0 ? '涨' : '跌'}幅</label>
+          <span className={`stock-item-value weight ${caclClass(data.percent)}`}>
+            {(data.percent * 100).toFixed(2)}%
+            <i className="percent-bar" style={{ width: `${Math.abs(data.percent * 1000)}%`}} />
+          </span>
         </div>
 
         <div className="white-blank"></div>
