@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/stock-helper/build/static/css/main.2ca80585.chunk.css",
+    "main.css": "/stock-helper/build/static/css/main.a32e4c44.chunk.css",
     "main.js": "/stock-helper/build/static/js/main.78a7a29d.chunk.js",
     "main.js.map": "/stock-helper/build/static/js/main.78a7a29d.chunk.js.map",
     "runtime-main.js": "/stock-helper/build/static/js/runtime-main.c8110caa.js",
@@ -8,9 +8,9 @@
     "static/js/2.d7ecbe05.chunk.js": "/stock-helper/build/static/js/2.d7ecbe05.chunk.js",
     "static/js/2.d7ecbe05.chunk.js.map": "/stock-helper/build/static/js/2.d7ecbe05.chunk.js.map",
     "index.html": "/stock-helper/build/index.html",
-    "precache-manifest.3ae0434068b00d443874ec28b41854b0.js": "/stock-helper/build/precache-manifest.3ae0434068b00d443874ec28b41854b0.js",
+    "precache-manifest.358edad9ba5c11d49dbcf113a1f56d44.js": "/stock-helper/build/precache-manifest.358edad9ba5c11d49dbcf113a1f56d44.js",
     "service-worker.js": "/stock-helper/build/service-worker.js",
-    "static/css/main.2ca80585.chunk.css.map": "/stock-helper/build/static/css/main.2ca80585.chunk.css.map",
+    "static/css/main.a32e4c44.chunk.css.map": "/stock-helper/build/static/css/main.a32e4c44.chunk.css.map",
     "static/js/2.d7ecbe05.chunk.js.LICENSE.txt": "/stock-helper/build/static/js/2.d7ecbe05.chunk.js.LICENSE.txt",
     "static/media/add-icon.svg": "/stock-helper/build/static/media/add-icon.4f995bf3.svg",
     "static/media/delete-icon.svg": "/stock-helper/build/static/media/delete-icon.7d8cde5e.svg",
@@ -20,7 +20,7 @@
   "entrypoints": [
     "static/js/runtime-main.c8110caa.js",
     "static/js/2.d7ecbe05.chunk.js",
-    "static/css/main.2ca80585.chunk.css",
+    "static/css/main.a32e4c44.chunk.css",
     "static/js/main.78a7a29d.chunk.js"
   ]
 }
