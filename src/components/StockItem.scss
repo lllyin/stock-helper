@@ -40,18 +40,18 @@
       margin-left: 1px;
     }
   }
-  .advice-value {
-    color: #555;
-    line-height: 1.5;
-  }
   .stock-item-value {
     word-break: break-all;
     color: #353535;
     &.earn-amount {
       opacity: 0.8;
     }
-    .mark {
+    &.advice-value {
+      line-height: 1.5;
       color: orange;
+    }
+    .mark {
+      color: orangered;
     }
     .link {
       cursor: pointer;
