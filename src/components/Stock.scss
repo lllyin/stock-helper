@@ -17,4 +17,32 @@
       }
     }
   }
+  .stock-list {
+    @media screen and (min-width: 600px) {
+      &.flow {
+        display: flex;
+        flex-wrap: wrap;
+        .stock-item {
+          min-width: 360px;
+          max-width: 422px;
+          flex-shrink: 0;
+          margin-left: 0;
+          margin-right: 12px;
+          flex: 1;
+          padding-bottom: 16px;
+          &:first-child {
+            margin-left: 0;
+          }
+        }
+      }
+    }
+    @media screen and (min-width: 767px) {
+      &.flow {
+        .stock-item {
+          min-width: 316px;
+          max-width: 422px;
+        }
+      }
+    }
+  }
 }

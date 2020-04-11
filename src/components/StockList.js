@@ -106,7 +106,7 @@ export default function StockList(props) {
           onDelete={handleDletePosition}
         />
       )}
-      <div className="stock-list">
+      <div className="stock-list flow">
         {sortedStocks.map(stock => (
           <StockItem key={stock.symbol} data={stock} />
         ))}
