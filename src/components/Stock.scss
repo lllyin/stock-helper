@@ -36,6 +36,25 @@
         }
       }
     }
+    // iphone 6/7/8横屏
+    @media screen and (min-width: 667px) {
+      &.flow {
+        .stock-item {
+          min-width: 200px;
+          max-width: 265px;
+        }
+      }
+    }
+    // iphone 横屏
+    @media screen and (min-width: 735px) {
+      &.flow {
+        .stock-item {
+          min-width: 200px;
+          max-width: 300px;
+        }
+      }
+    }
+    // ipad
     @media screen and (min-width: 767px) {
       &.flow {
         .stock-item {
