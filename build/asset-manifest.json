@@ -1,26 +1,22 @@
 {
   "files": {
-    "main.css": "/stock-helper/build/static/css/main.c626b50d.chunk.css",
-    "main.js": "/stock-helper/build/static/js/main.8c10f1df.chunk.js",
-    "main.js.map": "/stock-helper/build/static/js/main.8c10f1df.chunk.js.map",
+    "main.css": "/stock-helper/build/static/css/main.d8fb26d3.chunk.css",
+    "main.js": "/stock-helper/build/static/js/main.ac9672e3.chunk.js",
+    "main.js.map": "/stock-helper/build/static/js/main.ac9672e3.chunk.js.map",
     "runtime-main.js": "/stock-helper/build/static/js/runtime-main.c8110caa.js",
     "runtime-main.js.map": "/stock-helper/build/static/js/runtime-main.c8110caa.js.map",
-    "static/js/2.88d9cbe2.chunk.js": "/stock-helper/build/static/js/2.88d9cbe2.chunk.js",
-    "static/js/2.88d9cbe2.chunk.js.map": "/stock-helper/build/static/js/2.88d9cbe2.chunk.js.map",
+    "static/js/2.3bbfc437.chunk.js": "/stock-helper/build/static/js/2.3bbfc437.chunk.js",
+    "static/js/2.3bbfc437.chunk.js.map": "/stock-helper/build/static/js/2.3bbfc437.chunk.js.map",
     "index.html": "/stock-helper/build/index.html",
-    "precache-manifest.e045d7d9b532073d6964bc0b81978083.js": "/stock-helper/build/precache-manifest.e045d7d9b532073d6964bc0b81978083.js",
+    "precache-manifest.68f21916237348dffadfa8719f883938.js": "/stock-helper/build/precache-manifest.68f21916237348dffadfa8719f883938.js",
     "service-worker.js": "/stock-helper/build/service-worker.js",
-    "static/css/main.c626b50d.chunk.css.map": "/stock-helper/build/static/css/main.c626b50d.chunk.css.map",
-    "static/js/2.88d9cbe2.chunk.js.LICENSE.txt": "/stock-helper/build/static/js/2.88d9cbe2.chunk.js.LICENSE.txt",
-    "static/media/add-icon.svg": "/stock-helper/build/static/media/add-icon.4f995bf3.svg",
-    "static/media/delete-icon.svg": "/stock-helper/build/static/media/delete-icon.7d8cde5e.svg",
-    "static/media/edit-icon.svg": "/stock-helper/build/static/media/edit-icon.47681e14.svg",
-    "static/media/save-icon.svg": "/stock-helper/build/static/media/save-icon.c5e730ea.svg"
+    "static/css/main.d8fb26d3.chunk.css.map": "/stock-helper/build/static/css/main.d8fb26d3.chunk.css.map",
+    "static/js/2.3bbfc437.chunk.js.LICENSE.txt": "/stock-helper/build/static/js/2.3bbfc437.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.c8110caa.js",
-    "static/js/2.88d9cbe2.chunk.js",
-    "static/css/main.c626b50d.chunk.css",
-    "static/js/main.8c10f1df.chunk.js"
+    "static/js/2.3bbfc437.chunk.js",
+    "static/css/main.d8fb26d3.chunk.css",
+    "static/js/main.ac9672e3.chunk.js"
   ]
 }
