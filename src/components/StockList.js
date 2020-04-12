@@ -6,7 +6,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd'
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck'
-
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import { StockContext } from '../reducers';
 
 import './Stock.scss';
@@ -20,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
     color: '#555',
     fontSize: 15,
   },
+  sortTool: {
+    fontSize: 14,
+  }
 }));
 const TYPE_MAP = {
   asce: 1,
@@ -97,13 +101,13 @@ export default function StockList(props) {
     <div className="stock-list-wrap">
       <div className="tools-box">
         <div className="sort-tool">
-          <select onChange={handleSortChange}>
-            <option value="default">默认排序</option>
-            <option value="earnRate:asce">盈亏从低到高⬆</option>
-            <option value="earnRate:desc">盈亏从高到低⬇</option>
-            <option value="percent:asce">涨幅从低到高⬆</option>
-            <option value="percent:desc">涨幅从高到低⬇</option>
-          </select>
+          <Select onChange={handleSortChange} defaultValue="default" className={classes.sortTool}>
+            <MenuItem value="default">默认排序</MenuItem>
+            <MenuItem value="earnRate:asce">盈亏从低到高⬆</MenuItem>
+            <MenuItem value="earnRate:desc">盈亏从高到低⬇</MenuItem>
+            <MenuItem value="percent:asce">涨幅从低到高⬆</MenuItem>
+            <MenuItem value="percent:desc">涨幅从高到低⬇</MenuItem>
+          </Select>
         </div>
         <div className="position-tool" onClick={() => hanldPostionClick(showPostion ? 'save' : 'edit')}>
           {
