@@ -38,6 +38,7 @@
       color: #fff !important;
       border-radius: 1px;
       font-size: 14px;
+      transition: 0.25s ease;
       &.red {
         background-color: #f54545;
       }
@@ -74,6 +75,7 @@
         height: 1px;
         border-radius: 1px;
         opacity: 0.6;
+        transition: 0.25s ease;
       }
     }
   }
