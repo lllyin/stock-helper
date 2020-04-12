@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useReducer, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Snackbar from '@material-ui/core/Snackbar';
 import Reset from './components/Reset';
 import Import from './components/Import';
 import StockPanel from './components/StockPanel';
@@ -29,6 +30,23 @@ const useStyles = makeStyles(theme => ({
       color: '#888',
       fontSize: 14,
     }
+  },
+  snackbar: {
+    '& .MuiSnackbarContent-root': {
+      padding: '2px 16px',
+    },
+    '&.error .MuiSnackbarContent-root': {
+      backgroundColor: 'rgb(253, 236, 234)',
+      color: 'rgb(97, 26, 21)',
+    },
+    '&.warning .MuiSnackbarContent-root': {
+      backgroundColor: 'rgb(255, 244, 229)',
+      color: 'rgb(102, 60, 0)',
+    },
+    '&.success .MuiSnackbarContent-root': {
+      backgroundColor: 'rgb(237, 247, 237)',
+      color: 'rgb(30, 70, 32)',
+    }
   }
 }));
 // 定时器
@@ -38,6 +56,7 @@ export default function DashBord() {
   const classes = useStyles();
   const [stocksMap, setStocksMap] = useState({});
   const [stockList, setStockList] = useState([]);
+  const [tips, setTips] = useState({open: false, message: ''});
   const [summary, setSummary] = useState({});
   const [stockState, dispatch] = useReducer(stockReducer, stockInitData);
   const stockRef = useRef(stockState);
@@ -55,7 +74,8 @@ export default function DashBord() {
   }, []);
 
   // 获取股票信息
-  function fetchStocks() {
+  function fetchStocks(options = {}) {
+    const { success, fail } = options;
     const localStockStr = localStorage.getItem('stocks');
     const STOCKS = localStockStr ? JSON.parse(localStockStr) : [];
     const stockCodes = STOCKS.map(stock => String(stock.symbol));
@@ -84,15 +104,42 @@ export default function DashBord() {
           setStocksMap(serverData);
           setStockList(stockList);
           setSummary(summary);
+          success && success();
         },
         error: function(e) {
           console.error('请求接口错误');
+          fail && fail();
         },
       });
   }
 
   function handleSave() {
-    fetchStocks();
+    stockRef.current = { ...stockState, showPostion: false, isEdit: false };
+
+    fetchStocks({
+      success: () => {
+        setTips({
+          status: 'success',
+          open: true,
+          message: '保存成功',
+        })
+      },
+      fail: () => {
+        setTips({
+          status: 'error',
+          open: true,
+          message: '保存失败',
+        })
+      },
+    });
+  }
+
+  function handleTipClose() {
+    setTips({
+      status: 'default',
+      open: false,
+      message: '',
+    })
   }
 
   function handleResetConfirm() {
@@ -101,18 +148,47 @@ export default function DashBord() {
     });
     stockRef.current = { ...stockState, showPostion: false, isEdit: false };
     resetData();
-    fetchStocks();
+    fetchStocks({
+      success: () => {
+        setTips({
+          status: 'success',
+          open: true,
+          message: '重置成功',
+        })
+      },
+      fail: () => {
+        setTips({
+          status: 'error',
+          open: true,
+          message: '重置失败',
+        })
+      },
+    });
   }
 
   function handleImportConfirm(json) {
-    console.log('handleImportConfirm', json);
     if(json) {
       dispatch({
         type: 'SAVE',
       });
       stockRef.current = { ...stockState, showPostion: false, isEdit: false };
       resetData(json);
-      fetchStocks();
+      fetchStocks({
+        success: () => {
+          setTips({
+            status: 'success',
+            open: true,
+            message: '导入成功',
+          })
+        },
+        fail: () => {
+          setTips({
+            status: 'error',
+            open: true,
+            message: '导入失败',
+          })
+        },
+      });
     }
   }
 
@@ -133,6 +209,7 @@ export default function DashBord() {
         <SummaryPanel map={stocksMap} list={stockList} summary={summary} />
         <StockPanel map={stocksMap} list={stockList} onSave={handleSave} dispatch={dispatch} />
       </div>
+      <Snackbar className={`${classes.snackbar} ${tips.status}`}  anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={tips.open} onClose={handleTipClose} autoHideDuration={3000} message={tips.message} />
     </StockContext.Provider>
   );
 }

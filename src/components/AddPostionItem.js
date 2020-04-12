@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import AddIconSrc from '../images/add-icon.svg';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
 
 import './PositionItem.scss';
 
@@ -83,7 +85,7 @@ export default class AddPostionItem extends Component {
 
     return (
       <div className="postion-item-box">
-        <div className="position-edit-item">
+        <div className="position-edit-item add-position-item">
           {/* <div className="col stock-name">
             <input
               type="text"
@@ -93,33 +95,43 @@ export default class AddPostionItem extends Component {
             />
           </div> */}
           <div className="col stock-code">
-            <input
+            <TextField
+              required
               type="text"
+              label="股票代码"
               defaultValue={stock.symbol || ''}
-              placeholder="* 股票代码"
               onChange={e => this.handleInputChange('symbol', e)}
             />
           </div>
           <div className="col stock-cost-price">
-            <input
+            <TextField
+              required
               type="number"
+              label="成本"
               defaultValue={stock.costPrice || ''}
-              placeholder="* 成本"
               onChange={e => this.handleInputChange('costPrice', e)}
             />
           </div>
           <div className="col stock-postion">
-            <input
+            <TextField
+              required
               type="number"
+              label="持仓(股)"
               defaultValue={stock.position || ''}
-              placeholder="* 持仓(股)"
               onChange={e => this.handleInputChange('position', e)}
             />
           </div>
         </div>
         <div className="add-line">
           <div className="add-line-btn" onClick={this.handleAdd}>
-            <img src={AddIconSrc} alt="add btn" />
+            <Button
+              fullWidth
+              variant="text"
+              color="default"
+              startIcon={ <AddIcon />}
+            >
+              添加
+            </Button>
           </div>
         </div>
       </div>

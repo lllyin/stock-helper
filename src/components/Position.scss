@@ -15,14 +15,20 @@
       flex: 1;
     }
   }
-  .add-line-btn {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center ;
-    cursor: pointer;
-    > img {
-      width: 25px;
-      height: 25px;
+  .add-position-item {
+    font-size: 14px;
+    label {
+      font-size: 14px;
+    }
+  }
+  .add-line {
+    margin-top: 20px;
+
+    .add-line-btn {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center ;
+      cursor: pointer;
     }
   }
 }

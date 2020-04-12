@@ -191,6 +191,5 @@ export function calcStockSummary(stockList) {
 
   }
 
-  console.log('summary', summary);
   return summary;
 }

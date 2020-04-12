@@ -6,15 +6,15 @@
     align-items: center;
     margin-bottom: 12px;
     .sort-tool {
+      font-size: 14px;
+      > select {
+        font-size: 14px;
+      }
     }
     .position-tool {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      > img {
-        width: 25px;
-        height: 25px;
-      }
     }
   }
   .stock-list {

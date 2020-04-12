@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import DeleteIconSrc from '../images/delete-icon.svg';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import './PositionItem.scss';
 
@@ -111,7 +112,9 @@ export default class PostionItem extends Component {
             <div className="col stock-cost-price">{data.costPrice}</div>
             <div className="col stock-postion">
               <span>{data.position}</span>
-              <img className="delete-btn" src={DeleteIconSrc} alt="delete" onClick={this.onDelete} />
+              <IconButton className="delete-btn" aria-label="delete" size="small"  onClick={this.onDelete} >
+                <DeleteIcon size="small" />
+              </IconButton>
             </div>
           </div>
         )}

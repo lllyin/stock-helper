@@ -1,19 +1,33 @@
 import React, { useState, useEffect, useContext } from 'react';
 import StockItem from './StockItem';
 import { formatToLocalStocks } from '../utils/common';
-import EditIconSrc from '../images/edit-icon.svg';
-import SaveIconSrc from '../images/save-icon.svg';
 import Position from './Position';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd'
+import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck'
+
 import { StockContext } from '../reducers';
 
 import './Stock.scss';
 
+const useStyles = makeStyles((theme) => ({
+  saveButton: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  editButton: {
+    color: '#555',
+    fontSize: 15,
+  },
+}));
 const TYPE_MAP = {
   asce: 1,
   desc: -1,
 };
 
 export default function StockList(props) {
+  const classes = useStyles();
   const { dispatch } = props;
   const [stocks, setStocks] = useState([]);
   const [editStocks, setEditStocks] = useState([]);
@@ -92,9 +106,28 @@ export default function StockList(props) {
           </select>
         </div>
         <div className="position-tool" onClick={() => hanldPostionClick(showPostion ? 'save' : 'edit')}>
-          <span>{showPostion ? '保存' : `${stocks.length <= 0 ? '添加' : '修改'}持仓`}</span>
-          <img src={SaveIconSrc} alt="save" style={{ display: showPostion ? 'block' : 'none' }} />
-          <img src={EditIconSrc} alt="edit" style={{ display: showPostion ? 'none' : 'block' }} />
+          {
+            showPostion ? (
+              <Button
+                className={classes.saveButton}
+                variant="contained"
+                endIcon={ <PlaylistAddCheckIcon />}
+                color="primary"
+                size="small"
+              >
+                保存
+              </Button>
+            ): (
+              <Button
+                className={classes.editButton}
+                variant="text"
+                size="large"
+                endIcon={ <PlaylistAddIcon />}
+              >
+                {`${stocks.length <= 0 ? '添加' : '修改'}持仓`}
+              </Button>
+            )
+          }
         </div>
       </div>
       {showPostion && (

@@ -15,10 +15,10 @@ const useStyles = makeStyles((theme) => ({
   button: {
     color: '#888',
     textTransform: 'uppercase',
-    fontSize: 12,
+    fontSize: 15,
   },
   icon: {
-    fontSize: 16,
+    fontSize: 20,
   },
   tips: {
     fontSize: 14,

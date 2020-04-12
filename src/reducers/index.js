@@ -10,7 +10,6 @@ export function stockInit(initialData) {
 }
 
 export function stockReducer(state, action) {
-  console.log('stockReducer', state, action);
   switch (action.type) {
     case 'ADD':
       return { ...state, showPostion: true, isEdit: true };
