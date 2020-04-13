@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { toMultiple } from '../utils/common';
 
 import './StockItem.scss';
 
@@ -50,8 +51,10 @@ export default class StockItem extends Component {
     const maxAbsEarnRate = summary.earn.maxAbsRate;
     // 当前持仓亏损比绝对值
     const currentAbsEarnRate = Math.abs(data.earnRate);
+    // 参考值，以此值作为基础值来计算百分比
+    const baseRate = toMultiple(maxAbsEarnRate, 0.05);
     // 占比
-    const inPercent = (currentAbsEarnRate / maxAbsEarnRate).toFixed(2);
+    const inPercent = (currentAbsEarnRate / baseRate).toFixed(2);
 
     const style = {
       flex: inPercent
@@ -108,10 +111,10 @@ export default class StockItem extends Component {
           <div className="stock-spc-item advice-item">
             <label className="stock-item-label">建议</label>
             <span className="stock-item-value advice-value">
-              目前您的亏损超过了{Math.floor(Math.abs(data.earnRate) * 100)}%。建议补仓<b className="mark">{advice.x}</b>
+              目前您的亏损超过了{Math.floor(Math.abs(data.earnRate) * 100)}%。建议补仓<b className="mark">{(advice.x / 100) >> 0}</b>
               手， 需要资金
               <b className="mark">¥{Math.ceil(data.price * advice.x)}</b>, 可将亏损降至
-              <b className="mark">{(advice.realValue * 100).toFixed(3)}%</b>。
+              <b className="mark">{(advice.approValue * 100).toFixed(3)}%</b>。
             </span>
           </div>
         )}

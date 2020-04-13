@@ -1,19 +1,21 @@
 import Big from 'big.js';
 import { STOCKS, EXPECT_LOSS_RATE, ADVICE_LOSS_RATE } from '../constants';
 
+// eslint-disable-next-line no-extend-native
+String.prototype.replaceAt = function (index, replacement) {
+  return this.substr(0, index) + replacement + this.substr(index + 1);
+};
+
 // 对股票id进行处理
 export function getStockCodes(stocks = []) {
-  return stocks.map(code => {
+  return stocks.map((code) => {
     if (isNaN(code[0])) {
       if (code.toLowerCase().indexOf('us_') > -1) {
         return code.toUpperCase();
       } else if (code.indexOf('hk') > -1) {
         return code;
       } else {
-        return code
-          .toLowerCase()
-          .replace('sz', '1')
-          .replace('sh', '0');
+        return code.toLowerCase().replace('sz', '1').replace('sh', '0');
       }
     } else {
       return (code[0] === '6' ? '0' : '1') + code;
@@ -23,7 +25,7 @@ export function getStockCodes(stocks = []) {
 
 // 生成补仓函数
 export function genFnForBC(stocks = []) {
-  return stocks.map(stock => {
+  return stocks.map((stock) => {
     stock.bcFn = `((${stock.position}+x)${stock.price})/(${stock.costPrice}*${stock.position} + ${stock.price}x)`;
     return stock;
   });
@@ -36,33 +38,41 @@ export function soryBy(key, type) {}
  * @param {*} formula 公式，变量为x
  * @param {*} targetValue 目标值
  */
-export function calcFnResult(formula = '', targetValue) {
-  const ratio = 100;
-  let i = 1;
-  let flag = true;
-  let realValue = targetValue;
+function calcApproximateValue(formula = '', targetValue, options = {}) {
+  const { step = 1, startX = 0, endX, cycleCount = 300 } = options;
+  let realCycleCount = endX ? endX - startX + 1 : cycleCount;
+  let count = 0;
+  let i = 0;
+  let resultMap = {};
 
-  while (flag) {
-    const formulaStr = formula.replace(/x/g, `*${ratio * i}`);
+  while (count < realCycleCount) {
+    const vX = step + i;
+    const formulaStr = putIntoFormula(formula, 'x', vX);
     // eslint-disable-next-line no-eval
     const result = eval(formulaStr);
-    if (result <= targetValue) {
-      realValue = result;
-      flag = false;
-    } else {
-      i++;
-    }
-    // 设置边界值，大于100不在循环，避免进入死循环
-    if (i > 100) {
-      flag = false;
-    }
+    const delta = Math.abs(result - targetValue);
+
+    resultMap[delta] = { x: vX, y: result, times: count };
+    i += step;
+    count++;
   }
-  return { x: ratio * i, y: realValue, targetValue, realValue };
+  const minDelta = Math.min(...Object.keys(resultMap));
+  const approObj = resultMap[minDelta];
+
+  console.log(resultMap);
+  return { 
+    formula,
+    x: approObj.x, 
+    y: approObj.y,
+    targetValue,
+    approValue: approObj.y, 
+    step,
+  };
 }
 
 //格式华
 export function formatToLocalStocks(stocks = []) {
-  return stocks.map(stock => ({
+  return stocks.map((stock) => ({
     name: stock.name,
     symbol: stock.symbol,
     costPrice: stock.costPrice,
@@ -83,7 +93,6 @@ export function initData() {
 
 // 重置数据
 export function resetData(defaultJson = STOCKS) {
-
   localStorage.setItem('stocks', JSON.stringify(defaultJson));
 }
 
@@ -96,7 +105,7 @@ export function mergeStocks(serverStocks) {
     return sum;
   }, {});
   // 合并成本价、持仓信息
-  const stocks = STOCKS.map(localStock => {
+  const stocks = STOCKS.map((localStock) => {
     if (stockMap[localStock.symbol]) {
       const stockItem = {
         ...localStock,
@@ -107,14 +116,18 @@ export function mergeStocks(serverStocks) {
       const { costPrice, price, position } = stockItem;
 
       if (costPrice > price) {
-        stockItem.bcFn = `1-(${(position * price).toFixed(2)}+${price}x)/(${(costPrice * position).toFixed(2)}+${price}x)`;
+        stockItem.bcFn = `1-(${(position * price).toFixed(2)}+${price}x)/(${(costPrice * position).toFixed(
+          2,
+        )}+${price}x)`;
       } else {
-        stockItem.jcFn = `(${(position * price).toFixed(2)}+${price}x)/(${(costPrice * position).toFixed(2)}+${price}x)-1`;
+        stockItem.jcFn = `(${(position * price).toFixed(2)}+${price}x)/(${(costPrice * position).toFixed(
+          2,
+        )}+${price}x)-1`;
       }
       stockItem.earnRate = price / costPrice - 1;
 
       if (stockItem.earnRate < ADVICE_LOSS_RATE) {
-        advice = calcFnResult(stockItem.bcFn, -EXPECT_LOSS_RATE);
+        advice = calcApproximateValue(stockItem.bcFn, -EXPECT_LOSS_RATE, { step: 100 });
         advice.amount = (advice.x * stockItem.price).toFixed(2);
       }
 
@@ -156,7 +169,7 @@ export function calcStockSummary(stockList) {
       maxMoney: 0,
       // 盈亏比绝对值最大值
       maxAbsRate: 0,
-    }
+    },
   };
 
   summary = stockList.reduce((sum, item) => {
@@ -174,7 +187,7 @@ export function calcStockSummary(stockList) {
   summary.earnRate = new Big(summary.marketValue).div(summary.costValue).minus(1).toFixed(4).valueOf();
   summary.earnMoney = new Big(summary.marketValue).minus(summary.costValue).valueOf();
 
-  if(stockList && stockList.length > 0) {
+  if (stockList && stockList.length > 0) {
     const sortedByEarnRateList = stockList.sort((a, b) => a.earnRate - b.earnRate);
     // 最小收益股票
     const minRateStock = sortedByEarnRateList[0];
@@ -188,8 +201,65 @@ export function calcStockSummary(stockList) {
     summary.earn.maxMoney = (maxRateStock.earnRate * maxRateStock.costPrice * maxRateStock.position).toFixed(2);
 
     summary.earn.maxAbsRate = Math.max(Math.abs(minRateStock.earnRate), Math.abs(maxRateStock.earnRate));
-
   }
 
   return summary;
+}
+
+/**
+ * 求一个数的倍数
+ *
+ * @param n number
+ * @param m 最小起倍数
+ * @param options
+ */
+export function toMultiple(n, m, options = {}) {
+  let n1 = Number(n);
+  let m1 = Number(m);
+  // 返回值 是向上取整[ceil]，还是向下取整数[floor]
+  const { to = 'ceil' } = options;
+  const times = Math.floor(n1 / m1);
+
+  switch (to) {
+    case 'ceil': {
+      return Big(times).plus(1).times(m1).valueOf();
+    }
+    case 'floor': {
+      return Big(times).times(m1).valueOf();
+    }
+    default: {
+      return Big(times).plus(1).times(m1).valueOf();
+    }
+  }
+}
+
+/**
+ * 代入变量到公式
+ * @param {*} formula 公式
+ * @param {*} variableKey 变量key
+ * @param {*} variable 代入变量值
+ */
+function putIntoFormula(formula, variableKey, variable) {
+  const matchs = formula.match(new RegExp(variableKey, 'gi'));
+  let newFormula = formula;
+
+  if (matchs.length) {
+    matchs.forEach(() => {
+      const variableIdx = newFormula.indexOf(variableKey);
+      const prevChart = newFormula[variableIdx - 1];
+      const nextChart = newFormula[variableIdx + 1];
+
+      if (variableIdx > -1) {
+        if (/\d/.test(prevChart)) {
+          newFormula = newFormula.replaceAt(variableIdx, `*${variable}`);
+        } else if (/\d/.test(nextChart)) {
+          newFormula = newFormula.replaceAt(variableIdx, `${variable}*`);
+        } else {
+          newFormula = newFormula.replaceAt(variableIdx, `${variable}`);
+        }
+      }
+    });
+  }
+
+  return newFormula;
 }
