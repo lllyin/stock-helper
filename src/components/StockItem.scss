@@ -21,6 +21,12 @@
   .white-blank {
     height: 6px;
   }
+  .row {
+    display: flex;
+    .cell {
+      flex: 1;
+    }
+  }
   .stock-spc-item {
     margin-top: 6px;
     display: flex;
