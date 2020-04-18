@@ -2,6 +2,51 @@
 # yarn lockfile v1
 
 
+"@antv/adjust@~0.1.1":
+  version "0.1.1"
+  resolved "https://registry.npmjs.org/@antv/adjust/-/adjust-0.1.1.tgz#e263ab0e1a1941a648842fc086cf65a7e3b75e98"
+  integrity sha512-9FaMOyBlM4AgoRL0b5o0VhEKAYkexBNUrxV8XmpHU/9NBPJONBOB/NZUlQDqxtLItrt91tCfbAuMQmF529UX2Q==
+  dependencies:
+    "@antv/util" "~1.3.1"
+
+"@antv/f2@^3.6.3":
+  version "3.6.3"
+  resolved "https://registry.npmjs.org/@antv/f2/-/f2-3.6.3.tgz#0c80132494977730fe69a9d760082e06540b6475"
+  integrity sha512-Q6tT4/c0qU0KhJk2j5ywcgvq6MlByayGEYN9gN0WxttgeZeuOoGCN5wHk0jv/DVP5PVMN2tfbERthitwtJZ2lg==
+  dependencies:
+    "@antv/adjust" "~0.1.1"
+    "@antv/scale" "0.1.3"
+    "@antv/util" "~2.0.6"
+    "@babel/runtime" "^7.7.7"
+    hammerjs "^2.0.8"
+
+"@antv/gl-matrix@^2.7.1":
+  version "2.7.1"
+  resolved "https://registry.npmjs.org/@antv/gl-matrix/-/gl-matrix-2.7.1.tgz#acb8e37f7ab3df01345aba4372d7942be42eba14"
+  integrity sha512-oOWcVNlpELIKi9x+Mm1Vwbz8pXfkbJKykoCIOJ/dNK79hSIANbpXJ5d3Rra9/wZqK6MC961B7sybFhPlLraT3Q==
+
+"@antv/scale@0.1.3":
+  version "0.1.3"
+  resolved "https://registry.npmjs.org/@antv/scale/-/scale-0.1.3.tgz#4876e6140cb7dcda190e7fe2e780882dcac6b09d"
+  integrity sha512-oknlOg4OUqIh8LygrfQttx+OAnNJm2fQ81si4g8aby1WJJwj/TU1gCr+J3loIpKBtBK4VpP/OzTTqg1Ym67SOQ==
+  dependencies:
+    "@antv/util" "~1.3.1"
+    fecha "~2.3.3"
+
+"@antv/util@~1.3.1":
+  version "1.3.1"
+  resolved "https://registry.npmjs.org/@antv/util/-/util-1.3.1.tgz#30a34b201ff9126ec0d58c72c8166a9c3e644ccd"
+  integrity sha512-cbUta0hIJrKEaW3eKoGarz3Ita+9qUPF2YzTj8A6wds/nNiy20G26ztIWHU+5ThLc13B1n5Ik52LbaCaeg9enA==
+  dependencies:
+    "@antv/gl-matrix" "^2.7.1"
+
+"@antv/util@~2.0.6":
+  version "2.0.8"
+  resolved "https://registry.npmjs.org/@antv/util/-/util-2.0.8.tgz#52cb62e130e734fcdde3503bcd9263863f750e59"
+  integrity sha512-G9QRygQJ8UNGMi8L1dfMIa4SofbEO+jkXwvRY4ek/MLd04Q01UN0U28JeMFzw6FCKJdxiFu+2uwT/zjoFr3QoQ==
+  dependencies:
+    tslib "^1.10.0"
+
 "@babel/code-frame@7.8.3", "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.8.3":
   version "7.8.3"
   resolved "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.8.3.tgz#33e25903d7481181534e12ec0a25f16b6fcf419e"
@@ -938,6 +983,13 @@
   version "7.8.7"
   resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.8.7.tgz#8fefce9802db54881ba59f90bb28719b4996324d"
   integrity sha512-+AATMUFppJDw6aiR5NVPHqIQBlV/Pj8wY/EZH+lmvRdUo9xBaz/rF3alAwFJQavvKfeOlPE7oaaDHVbcySbCsg==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
+"@babel/runtime@^7.7.7":
+  version "7.9.2"
+  resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.9.2.tgz#d90df0583a3a252f09aaa619665367bae518db06"
+  integrity sha512-NE2DtOdufG7R5vnfQUTehdTfNycfUANEtCa9PssN9O/xmTzP4E08UI797ixaei6hBEVL9BI/PsdJS5x7mWoB9Q==
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -4392,6 +4444,11 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "2.1.1"
 
+fecha@~2.3.3:
+  version "2.3.3"
+  resolved "https://registry.npmjs.org/fecha/-/fecha-2.3.3.tgz#948e74157df1a32fd1b12c3a3c3cdcb6ec9d96cd"
+  integrity sha512-lUGBnIamTAwk4znq5BcqsDaxSmZ9nDVJaij6NvRt/Tg4R69gERA+otPKbS86ROw9nxVMw2/mp1fnaiWqbs6Sdg==
+
 figgy-pudding@^3.5.1:
   version "3.5.1"
   resolved "https://registry.npmjs.org/figgy-pudding/-/figgy-pudding-3.5.1.tgz#862470112901c727a0e495a80744bd5baa1d6790"
@@ -4877,6 +4934,11 @@ gzip-size@5.1.1:
   dependencies:
     duplexer "^0.1.1"
     pify "^4.0.1"
+
+hammerjs@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.npmjs.org/hammerjs/-/hammerjs-2.0.8.tgz#04ef77862cff2bb79d30f7692095930222bf60f1"
+  integrity sha1-BO93hiz/K7edMPdpIJWTAiK/YPE=
 
 handle-thing@^2.0.0:
   version "2.0.0"

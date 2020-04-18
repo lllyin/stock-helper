@@ -59,13 +59,12 @@ function calcApproximateValue(formula = '', targetValue, options = {}) {
   const minDelta = Math.min(...Object.keys(resultMap));
   const approObj = resultMap[minDelta];
 
-  console.log(resultMap);
-  return { 
+  return {
     formula,
-    x: approObj.x, 
+    x: approObj.x,
     y: approObj.y,
     targetValue,
-    approValue: approObj.y, 
+    approValue: approObj.y,
     step,
   };
 }
@@ -220,6 +219,10 @@ export function toMultiple(n, m, options = {}) {
   const { to = 'ceil' } = options;
   const times = Math.floor(n1 / m1);
 
+  if (n1 === m1 || n1 % m1 === 0) {
+    return n1;
+  }
+
   switch (to) {
     case 'ceil': {
       return Big(times).plus(1).times(m1).valueOf();
@@ -263,3 +266,30 @@ function putIntoFormula(formula, variableKey, variable) {
 
   return newFormula;
 }
+
+// 格式化模拟设置
+export const formatSimulateValues = (values) => {
+  const result = {};
+  Object.keys(values).forEach((key) => {
+    const keySplit = key.split('_');
+
+    if (keySplit.length > 1) {
+      const key0 = keySplit[0];
+      const key1 = keySplit[1];
+
+      if (result[key0]) {
+        result[key0][key1] = values[key];
+      } else {
+        result[key0] = {
+          [key1]: values[key],
+        };
+      }
+    } else {
+      result[key] = values[key];
+    }
+  });
+  result.down.threshold = -result.down.threshold / 100;
+  result.up.threshold = result.up.threshold / 100;
+  result.up.position = -result.up.position;
+  return result;
+};

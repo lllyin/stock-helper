@@ -62,7 +62,6 @@ export default function Import(props) {
       json = JSON.parse(jsonText);
       setError(false);
     } catch (error1) {
-      console.log('error', error1);
       setError('JSON解析错误, 请核验格式是否正确');
       return;
     }

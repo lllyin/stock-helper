@@ -17,11 +17,11 @@ function App() {
  */
 window.addEventListener('error', (globalError) => {
   console.error('addEventListener error', globalError);
-  const r = window.confirm(`数据错误，将重置数据。\n${globalError.message}`)
-  if(r === true) {
-    resetData();
-    window.location.reload();
-  }
+  // const r = window.confirm(`数据错误，将重置数据。\n${globalError.message}`)
+  // if(r === true) {
+  //   resetData();
+  //   window.location.reload();
+  // }
 });
 
 export default App;
