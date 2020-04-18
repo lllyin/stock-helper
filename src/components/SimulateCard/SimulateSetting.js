@@ -103,8 +103,6 @@ export default function SimulateSetting(props) {
                 onChange={(e) => handleInputChange(e, 'p')}
                 InputProps={{
                   className: classes.center,
-                  min: 0,
-                  max: 1,
                 }}
               />
             </div>

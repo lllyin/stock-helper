@@ -67,7 +67,7 @@ export default class LineChart extends PureComponent {
       .color('type')
       .size(2 * devicePixelRatio)
       .shape('type', (type) => {
-        if (type === '预期收益') {
+        if (type === '模拟收益') {
           return 'line';
         }
         if (type === '市场收益') {

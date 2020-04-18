@@ -29,7 +29,7 @@ function SimulateCard(props) {
       lineSource.push({
         x: idx,
         y: v.earnRate,
-        type: '预期收益',
+        type: '模拟收益',
       });
       lineSource.push({
         x: idx,
