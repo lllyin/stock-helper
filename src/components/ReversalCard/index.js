@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     backfaceVisibility: 'hidden',
     transformStyle: 'preserve-3d',
-    transition: 'transform 2s',
+    transition: 'transform 2s, visibility 2s, opacity 2s',
   },
   back: {
     position: 'absolute',
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     backfaceVisibility: 'hidden',
     transformStyle: 'preserve-3d',
-    transition: 'transform 2s',
+    transition: 'transform 2s, visibility 2s, opacity 2s',
   },
 }));
 
@@ -56,6 +56,8 @@ function ReversalCard(props) {
         className={`reversal-card-back ${classes.back}`}
         style={{
           transform: on ? 'rotateY(0deg)' : 'rotateY(-180deg)',
+          visibility: on ? 'visible' : 'hidden',
+          opacity: on ? 1 : 0,
         }}
       >
         {reversal}
