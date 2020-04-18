@@ -145,7 +145,7 @@ export default class StockItem extends Component {
           <div className="row">
             <div className="cell stock-spc-item">
               <label className="stock-item-label">当日浮{data.percent >= 0 ? '盈' : '亏'}</label>
-              <span className={`stock-item-value ${caclClass(data.percent)}`}>
+              <span className={`stock-item-value ${caclClass(data.percent)} weight`}>
                 {(data.costPrice * data.position * data.percent).toFixed(2)}
               </span>
             </div>
@@ -156,12 +156,12 @@ export default class StockItem extends Component {
           </div>
           <div className="row">
             <div className="cell stock-spc-item">
-              <label className="stock-item-label">持仓</label>
-              <span className="stock-item-value">{data.position}</span>
-            </div>
-            <div className="cell stock-spc-item">
               <label className="stock-item-label">现价</label>
               <span className="stock-item-value">{data.price}</span>
+            </div>
+            <div className="cell stock-spc-item">
+              <label className="stock-item-label">持仓</label>
+              <span className="stock-item-value">{data.position}</span>
             </div>
           </div>
 
