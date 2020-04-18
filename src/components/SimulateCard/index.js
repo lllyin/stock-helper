@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimulateCard(props) {
+function SimulateCard(props) {
   const [lineSource, setuLineSource] = useState([]);
   const classes = useStyles();
   const { stock, options } = props;
@@ -47,3 +47,5 @@ export default function SimulateCard(props) {
     </div>
   );
 }
+
+export default React.memo(SimulateCard);

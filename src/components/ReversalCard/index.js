@@ -22,24 +22,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ReversalCard(props) {
+function ReversalCard(props) {
   const { on = false, reversal, children, className = '' } = props;
   const classes = useStyles();
   const cardFaceEl = useRef(null);
   const [rect, setRect] = useState({});
-  const [isFirstIn, setIsFirstIn] = useState(true);
 
   useEffect(() => {
     if (cardFaceEl) {
       const rect = cardFaceEl.current.getBoundingClientRect();
       setRect(rect);
     }
-    setIsFirstIn(true);
   }, []);
-
-  useEffect(() => {
-    setIsFirstIn(false);
-  }, [on]);
 
   return (
     <div
@@ -64,8 +58,20 @@ export default function ReversalCard(props) {
           transform: on ? 'rotateY(0deg)' : 'rotateY(-180deg)',
         }}
       >
-        {on || !isFirstIn ? reversal : null}
+        {reversal}
       </div>
     </div>
   );
 }
+
+function areEqual(prevProps, nextProps) {
+  /*
+  如果把 nextProps 传入 render 方法的返回结果与
+  将 prevProps 传入 render 方法的返回结果一致则返回 true，
+  否则返回 false
+  */
+  // console.log('areEqual', nextProps.update, prevProps.on === nextProps.on);
+  return prevProps.on === nextProps.on && prevProps.update === nextProps.update;
+}
+
+export default React.memo(ReversalCard, areEqual);

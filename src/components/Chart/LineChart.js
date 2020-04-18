@@ -23,6 +23,18 @@ export default class LineChart extends PureComponent {
     }
   }
 
+  componentDidUpdate() {
+    if (this.boxRef) {
+      const { height, width } = this.state.boxRect;
+      const boxRect = this.boxRef.getBoundingClientRect();
+      if (height !== boxRect.height || width !== boxRect.width) {
+        this.setState({
+          boxRect: { width: boxRect.width, height: boxRect.height },
+        });
+      }
+    }
+  }
+
   creator = (chart, data) => {
     const { source } = data;
     // 获取html设置的dpr

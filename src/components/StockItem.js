@@ -119,8 +119,19 @@ export default class StockItem extends Component {
           </div>
         </div>
         <ReversalCard
+          update={this.state.update}
           on={this.state.reversal}
-          reversal={<SimulateCard update={this.state.update} stock={data} options={simulateOpts} />}
+          reversal={
+            <SimulateCard
+              update={this.state.update}
+              stock={{
+                position: data.position,
+                costPrice: data.costPrice,
+                earnRate: data.earnRate,
+              }}
+              options={simulateOpts}
+            />
+          }
         >
           <div className="stock-spc-item earn-rate-item">
             <label className="stock-item-label">盈亏比</label>
