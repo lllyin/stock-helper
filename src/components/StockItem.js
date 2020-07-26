@@ -168,11 +168,11 @@ export default class StockItem extends Component {
               <div className='stock-spc-item earn-rate-item target'>
                 <label className='stock-item-label'>目标估值1</label>
                 <span
-                  className={`stock-item-value ${caclClass(calcTargetPrice1(data) - data.price)} weight`}
-                  style={this.calcPercentStyle(calcTargetPrice1(data) / data.price - 1)}
+                  className={`stock-item-value ${caclClass(calcTargetPrice1(data) - data.costPrice)} weight`}
+                  style={this.calcPercentStyle(calcTargetPrice1(data) / data.costPrice - 1)}
                 >
                   <i className='earn-money'>估价1: {calcTargetPrice1(data).toFixed(2)}元</i>
-                  {((calcTargetPrice1(data) / data.price - 1) * 100).toFixed(3)}%
+                  {((calcTargetPrice1(data) / data.costPrice - 1) * 100).toFixed(3)}%
                 </span>
               </div>
             </React.Fragment>
@@ -184,11 +184,11 @@ export default class StockItem extends Component {
               <div className='stock-spc-item earn-rate-item target'>
                 <label className='stock-item-label'>目标估值2</label>
                 <span
-                  className={`stock-item-value ${caclClass(calcTargetPrice2(data) - data.price)} weight`}
-                  style={this.calcPercentStyle(calcTargetPrice2(data) / data.price - 1)}
+                  className={`stock-item-value ${caclClass(calcTargetPrice2(data) - data.costPrice)} weight`}
+                  style={this.calcPercentStyle(calcTargetPrice2(data) / data.costPrice - 1)}
                 >
                   <i className='earn-money'>估价2: {calcTargetPrice2(data).toFixed(2)}元</i>
-                  {((calcTargetPrice2(data) / data.price - 1) * 100).toFixed(3)}%
+                  {((calcTargetPrice2(data) / data.costPrice - 1) * 100).toFixed(3)}%
                 </span>
               </div>
             </React.Fragment>
