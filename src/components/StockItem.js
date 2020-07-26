@@ -101,14 +101,14 @@ export default class StockItem extends Component {
 
     return (
       <div className={`stock-item ${earningCls}`}>
-        <div className="title-box">
+        <div className='title-box'>
           <h3>{data.name || '无名股票'}</h3>
-          <div className="more-tools">
+          <div className='more-tools'>
             <Button endIcon={!this.state.reversal && <TrendingUpIcon />} onClick={this.handleRevesalClick}>
               {this.state.reversal ? '返回' : '模拟走势'}
             </Button>
             {this.state.reversal && (
-              <IconButton aria-label="setting" onClick={this.handleUpdateSimulate}>
+              <IconButton aria-label='setting' onClick={this.handleUpdateSimulate}>
                 <LoopIcon />
               </IconButton>
             )}
@@ -133,83 +133,76 @@ export default class StockItem extends Component {
             />
           }
         >
-          <div className="stock-spc-item earn-rate-item">
-            <label className="stock-item-label">盈亏比</label>
-            <span className={`stock-item-value ${earningCls} weight`} style={style}>
-              {(data.earnRate * 100).toFixed(3)}%
-            </span>
-          </div>
-          <div className="row">
-            <div className="cell stock-spc-item">
-              <label className="stock-item-label">总盈亏</label>
-              <span className={`stock-item-value ${earningCls} earn-amount`}>
-                {(data.earnRate * data.costPrice * data.position).toFixed(2)}
-              </span>
+          <div className='row'>
+            <div className='cell stock-spc-item'>
+              <label className='stock-item-label'>成本</label>
+              <span className='stock-item-value'>{data.costPrice}</span>
             </div>
-            <div className="cell stock-spc-item">
-              <label className="stock-item-label">市值</label>
-              <span className={`stock-item-value`}>{(data.costPrice * data.position).toFixed(2)}</span>
+            <div className='cell stock-spc-item'>
+              <label className='stock-item-label'>持仓</label>
+              <span className='stock-item-value'>{data.position}</span>
             </div>
           </div>
 
-          <div className="white-blank"></div>
-          <div className="row">
-            <div className="cell stock-spc-item">
-              <label className="stock-item-label">当日浮{data.percent >= 0 ? '盈' : '亏'}</label>
+          <div className='white-blank'></div>
+          <div className='row'>
+            <div className='cell stock-spc-item'>
+              <label className='stock-item-label'>现价</label>
+              <span className='stock-item-value'>{data.price}</span>
+            </div>
+            <div className='cell stock-spc-item'>
+              <label className='stock-item-label'>日浮{data.percent >= 0 ? '盈' : '亏'}</label>
               <span className={`stock-item-value ${caclClass(data.percent)} weight`}>
                 {(data.costPrice * data.position * data.percent).toFixed(2)}
               </span>
             </div>
-            <div className="cell stock-spc-item">
-              <label className="stock-item-label">成本</label>
-              <span className="stock-item-value">{data.costPrice}</span>
-            </div>
-          </div>
-          <div className="row">
-            <div className="cell stock-spc-item">
-              <label className="stock-item-label">现价</label>
-              <span className="stock-item-value">{data.price}</span>
-            </div>
-            <div className="cell stock-spc-item">
-              <label className="stock-item-label">持仓</label>
-              <span className="stock-item-value">{data.position}</span>
-            </div>
           </div>
 
+          <div className='white-blank'></div>
           <div className={`stock-spc-item percent-item`}>
-            <label className="stock-item-label">当日{data.percent >= 0 ? '涨' : '跌'}幅</label>
+            <label className='stock-item-label'>当日{data.percent >= 0 ? '涨' : '跌'}幅</label>
             <span className={`stock-item-value weight ${caclClass(data.percent)}`}>
               {(data.percent * 100).toFixed(2)}%
-              <i className="percent-bar" style={{ width: `${Math.abs(data.percent * 1000)}%` }} />
+              <i className='percent-bar' style={{ width: `${Math.abs(data.percent * 1000)}%` }} />
             </span>
           </div>
 
-          <div className="white-blank"></div>
+          <div className='white-blank'></div>
+          <div className='stock-spc-item earn-rate-item'>
+            <label className='stock-item-label'>总盈亏</label>
+            <span className={`stock-item-value ${earningCls} weight`} style={style}>
+              <i className='earn-money'>
+                {earningsPerShare >= 0 ? '盈' : '亏'}: {(data.earnRate * data.costPrice * data.position).toFixed(2)}元
+              </i>
+              {(data.earnRate * 100).toFixed(3)}%
+            </span>
+          </div>
 
-          <div className="stock-spc-item">
-            <label className="stock-item-label">{earningsPerShare < 0 ? '补仓函数' : '加仓函数'}</label>
+          <div className='white-blank'></div>
+          <div className='stock-spc-item'>
+            <label className='stock-item-label'>{earningsPerShare < 0 ? '补仓函数' : '加仓函数'}</label>
             <span
-              className="stock-item-value"
+              className='stock-item-value'
               onClick={() => {
                 this.handleLinkClick(data);
               }}
             >
-              <span className="link">查看</span>
+              <span className='link'>查看</span>
               {/* <small className="text-weak">(灰色曲线为函数的导数图)</small> */}
             </span>
           </div>
 
-          <div className="white-blank"></div>
+          <div className='white-blank'></div>
 
           {advice.x && (
-            <div className="stock-spc-item advice-item">
-              <label className="stock-item-label">建议</label>
-              <span className="stock-item-value advice-value">
+            <div className='stock-spc-item advice-item'>
+              <label className='stock-item-label'>建议</label>
+              <span className='stock-item-value advice-value'>
                 目前您的亏损超过了{Math.floor(Math.abs(data.earnRate) * 100)}%。建议补仓
-                <b className="mark">{(advice.x / 100) >> 0}</b>
+                <b className='mark'>{(advice.x / 100) >> 0}</b>
                 手， 需要资金
-                <b className="mark">¥{Math.ceil(data.price * advice.x)}</b>, 可将亏损降至
-                <b className="mark">{(advice.approValue * 100).toFixed(3)}%</b>。
+                <b className='mark'>¥{Math.ceil(data.price * advice.x)}</b>, 可将亏损降至
+                <b className='mark'>{(advice.approValue * 100).toFixed(3)}%</b>。
               </span>
             </div>
           )}

@@ -19,7 +19,7 @@
     font-weight: 500;
   }
   .white-blank {
-    height: 6px;
+    height: 12px;
   }
   .row {
     display: flex;
@@ -36,7 +36,7 @@
     }
   }
   .stock-spc-item {
-    margin-top: 6px;
+    // margin-top: 6px;
     display: flex;
     &:first-of-type {
       margin-top: 0;
@@ -45,22 +45,44 @@
   .earn-rate-item {
     height: 30px;
     align-items: center;
+    margin-top: 20px;
     .stock-item-value {
-      height: 30px;
-      line-height: 30px;
+      position: relative;
+      height: 20px;
+      line-height: 20px;
       text-indent: 6px;
       color: #fff !important;
       border-radius: 1px;
       font-size: 14px;
       transition: 0.25s ease;
+      word-break: keep-all;
+      white-space: nowrap;
+      .earn-money {
+        position: absolute;
+        left: 0;
+        top: -20px;
+        text-indent: -1px;
+        word-break: keep-all;
+        white-space: nowrap;
+        font-size: 14px;
+      }
       &.red {
         background-color: #f54545;
+        .earn-money {
+          color: #f54545;
+        }
       }
       &.green {
         background-color: #0f990f;
+        .earn-money {
+          color: #0f990f;
+        }
       }
       &.default {
         // background-color: #666;
+        .earn-money {
+          color: #666;
+        }
       }
     }
   }
