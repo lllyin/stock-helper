@@ -46,6 +46,9 @@
     height: 30px;
     align-items: center;
     margin-top: 20px;
+    &.target {
+      opacity: 0.9;
+    }
     .stock-item-value {
       position: relative;
       height: 20px;

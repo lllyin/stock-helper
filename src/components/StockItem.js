@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import ReversalCard from './ReversalCard';
-import SimulateCard from './SimulateCard';
-import { toMultiple, formatSimulateValues } from '../utils/common';
-import TrendingUpIcon from '@material-ui/icons/TrendingUp';
-import LoopIcon from '@material-ui/icons/Loop';
-import { Button } from '@material-ui/core';
-import SimulateSetting from './SimulateCard/SimulateSetting';
+import { toMultiple, updateStock, calcTargetPrice1, calcTargetPrice2 } from '../utils/common';
 import IconButton from '@material-ui/core/IconButton';
+import SettingsIcon from '@material-ui/icons/Settings';
+import SettingPop from './SettingPop';
 
 import './StockItem.scss';
 
@@ -38,7 +34,7 @@ function calcLink(data) {
 
 export default class StockItem extends Component {
   state = {
-    reversal: false,
+    isShowSetting: false,
     simulateOptions: {
       p: 0.6,
       cycle: 30,
@@ -49,35 +45,30 @@ export default class StockItem extends Component {
     },
   };
 
-  // 翻转卡片
-  handleRevesalClick = () => {
-    this.setState({
-      reversal: !this.state.reversal,
-    });
-  };
-
   // 点击补仓函数跳转至函数绘图网站
   handleLinkClick(data) {
     const url = calcLink(data);
     window.open(url, data.name);
   }
 
-  // 修改模拟参数
-  handleConfirm = (values) => {
+  // 打开/关闭设置面板
+  handleToogleSetting = (flag) => {
     this.setState({
-      simulateOptions: values,
+      isShowSetting: flag,
     });
   };
 
-  // 刷新模拟数据
-  handleUpdateSimulate = () => {
-    this.setState({
-      update: new Date().valueOf(),
-    });
+  // 点击面板确定
+  handleConfirm = (values) => {
+    console.log('handleConfirm', values);
+    if (values) {
+      updateStock(this.props.data.symbol, values);
+    }
   };
 
   render() {
     const { data, summary } = this.props;
+    const { isShowSetting } = this.state;
     // 每股收益
     const earningsPerShare = data.price - data.costPrice;
     const earningCls = caclClass(earningsPerShare);
@@ -94,45 +85,28 @@ export default class StockItem extends Component {
     // 占比
     const inPercent = (currentAbsEarnRate / baseRate).toFixed(2);
 
-    const simulateOpts = formatSimulateValues(this.state.simulateOptions);
     const style = {
       flex: inPercent,
     };
 
+    console.log('hah', data);
     return (
       <div className={`stock-item ${earningCls}`}>
         <div className='title-box'>
           <h3>{data.name || '无名股票'}</h3>
           <div className='more-tools'>
-            <Button endIcon={!this.state.reversal && <TrendingUpIcon />} onClick={this.handleRevesalClick}>
-              {this.state.reversal ? '返回' : '模拟走势'}
-            </Button>
-            {this.state.reversal && (
-              <IconButton aria-label='setting' onClick={this.handleUpdateSimulate}>
-                <LoopIcon />
-              </IconButton>
-            )}
-
-            {this.state.reversal && (
-              <SimulateSetting options={this.state.simulateOptions} onConfirm={this.handleConfirm} />
-            )}
+            <IconButton aria-label='setting' onClick={() => this.handleToogleSetting(true)}>
+              <SettingsIcon />
+            </IconButton>
           </div>
         </div>
-        <ReversalCard
-          update={this.state.update}
-          on={this.state.reversal}
-          reversal={
-            <SimulateCard
-              update={this.state.update}
-              stock={{
-                position: data.position,
-                costPrice: data.costPrice,
-                earnRate: data.earnRate,
-              }}
-              options={simulateOpts}
-            />
-          }
-        >
+        <SettingPop
+          open={isShowSetting}
+          data={data}
+          onConfirm={this.handleConfirm}
+          onClose={() => this.handleToogleSetting(false)}
+        />
+        <seaction>
           <div className='row'>
             <div className='cell stock-spc-item'>
               <label className='stock-item-label'>成本</label>
@@ -178,6 +152,32 @@ export default class StockItem extends Component {
             </span>
           </div>
 
+          {data.eps && data.pe && data.profits && (
+            <React.Fragment>
+              <div className='white-blank'></div>
+              <div className='stock-spc-item earn-rate-item target'>
+                <label className='stock-item-label'>目标估值1</label>
+                <span className={`stock-item-value ${earningCls} weight`} style={style}>
+                  <i className='earn-money'>估价1: {calcTargetPrice1(data).toFixed(2)}元</i>
+                  {((calcTargetPrice1(data) / data.price - 1) * 100).toFixed(3)}%
+                </span>
+              </div>
+            </React.Fragment>
+          )}
+
+          {data.eps && data.pe && data.profits && (
+            <React.Fragment>
+              <div className='white-blank'></div>
+              <div className='stock-spc-item earn-rate-item target'>
+                <label className='stock-item-label'>目标估值2</label>
+                <span className={`stock-item-value ${earningCls} weight`} style={style}>
+                  <i className='earn-money'>估价2: {calcTargetPrice2(data).toFixed(2)}元</i>
+                  {((calcTargetPrice2(data) / data.price - 1) * 100).toFixed(3)}%
+                </span>
+              </div>
+            </React.Fragment>
+          )}
+
           <div className='white-blank'></div>
           <div className='stock-spc-item'>
             <label className='stock-item-label'>{earningsPerShare < 0 ? '补仓函数' : '加仓函数'}</label>
@@ -206,7 +206,7 @@ export default class StockItem extends Component {
               </span>
             </div>
           )}
-        </ReversalCard>
+        </seaction>
       </div>
     );
   }

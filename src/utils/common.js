@@ -76,6 +76,10 @@ export function formatToLocalStocks(stocks = []) {
     symbol: stock.symbol,
     costPrice: stock.costPrice,
     position: stock.position,
+    pe: stock.pe,
+    eps: stock.eps,
+    profits: stock.profits,
+    issue: stock.issue,
   }));
 }
 
@@ -293,3 +297,38 @@ export const formatSimulateValues = (values) => {
   result.up.position = -result.up.position;
   return result;
 };
+
+/**
+ * 更新本地股票持仓
+ *
+ * @export
+ * @param {*} key
+ * @param {*} newValues
+ * @returns
+ */
+export function updateStock(key, newValues) {
+  const localStockStr = localStorage.getItem('stocks');
+  const stocks = localStockStr ? JSON.parse(localStockStr) : [];
+
+  const newStocks = stocks.map((item) => {
+    if (String(item.symbol) === String(key)) {
+      return {
+        ...item,
+        ...newValues,
+      };
+    } else {
+      return item;
+    }
+  });
+
+  localStorage.setItem('stocks', JSON.stringify(formatToLocalStocks(newStocks)));
+  return newStocks;
+}
+
+export function calcTargetPrice1(values) {
+  return (values.profits * values.pe) / values.issue;
+}
+
+export function calcTargetPrice2(values) {
+  return values.eps * values.pe;
+}
