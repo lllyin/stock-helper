@@ -66,8 +66,29 @@ export default class StockItem extends Component {
     }
   };
 
+  calcTargetPercent = (targetRate, data) => {
+    const { summary } = this.props;
+
+    // 所有持仓最大亏损比绝对值
+    const maxAbsEarnRate = summary.earn.maxAbsRate;
+    // 当前持仓亏损比绝对值
+    const currentAbsEarnRate = Math.abs(targetRate);
+    // 参考值，以此值作为基础值来计算百分比
+    const baseRate = toMultiple(maxAbsEarnRate, 0.05);
+    // 占比
+    const inPercent = (currentAbsEarnRate / baseRate).toFixed(2);
+
+    return inPercent;
+  };
+
+  calcPercentStyle = (targetRate) => {
+    return {
+      flex: this.calcTargetPercent(targetRate),
+    };
+  };
+
   render() {
-    const { data, summary } = this.props;
+    const { data } = this.props;
     const { isShowSetting } = this.state;
     // 每股收益
     const earningsPerShare = data.price - data.costPrice;
@@ -76,18 +97,7 @@ export default class StockItem extends Component {
     // 计算达到预期亏损的补仓建议
     let { advice } = data;
 
-    // 所有持仓最大亏损比绝对值
-    const maxAbsEarnRate = summary.earn.maxAbsRate;
-    // 当前持仓亏损比绝对值
-    const currentAbsEarnRate = Math.abs(data.earnRate);
-    // 参考值，以此值作为基础值来计算百分比
-    const baseRate = toMultiple(maxAbsEarnRate, 0.05);
-    // 占比
-    const inPercent = (currentAbsEarnRate / baseRate).toFixed(2);
-
-    const style = {
-      flex: inPercent,
-    };
+    const style = this.calcPercentStyle(data.earnRate);
 
     console.log('hah', data);
     return (
@@ -157,7 +167,10 @@ export default class StockItem extends Component {
               <div className='white-blank'></div>
               <div className='stock-spc-item earn-rate-item target'>
                 <label className='stock-item-label'>目标估值1</label>
-                <span className={`stock-item-value ${earningCls} weight`} style={style}>
+                <span
+                  className={`stock-item-value ${caclClass(calcTargetPrice1(data) - data.price)} weight`}
+                  style={this.calcPercentStyle(calcTargetPrice1(data) / data.price - 1)}
+                >
                   <i className='earn-money'>估价1: {calcTargetPrice1(data).toFixed(2)}元</i>
                   {((calcTargetPrice1(data) / data.price - 1) * 100).toFixed(3)}%
                 </span>
@@ -170,7 +183,10 @@ export default class StockItem extends Component {
               <div className='white-blank'></div>
               <div className='stock-spc-item earn-rate-item target'>
                 <label className='stock-item-label'>目标估值2</label>
-                <span className={`stock-item-value ${earningCls} weight`} style={style}>
+                <span
+                  className={`stock-item-value ${caclClass(calcTargetPrice2(data) - data.price)} weight`}
+                  style={this.calcPercentStyle(calcTargetPrice2(data) / data.price - 1)}
+                >
                   <i className='earn-money'>估价2: {calcTargetPrice2(data).toFixed(2)}元</i>
                   {((calcTargetPrice2(data) / data.price - 1) * 100).toFixed(3)}%
                 </span>
