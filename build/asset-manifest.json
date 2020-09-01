@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/stock-helper/build/static/css/main.c7861351.chunk.css",
-    "main.js": "/stock-helper/build/static/js/main.247fb20a.chunk.js",
-    "main.js.map": "/stock-helper/build/static/js/main.247fb20a.chunk.js.map",
-    "runtime-main.js": "/stock-helper/build/static/js/runtime-main.c8110caa.js",
-    "runtime-main.js.map": "/stock-helper/build/static/js/runtime-main.c8110caa.js.map",
-    "static/js/2.aa386a9f.chunk.js": "/stock-helper/build/static/js/2.aa386a9f.chunk.js",
-    "static/js/2.aa386a9f.chunk.js.map": "/stock-helper/build/static/js/2.aa386a9f.chunk.js.map",
-    "index.html": "/stock-helper/build/index.html",
-    "precache-manifest.906b0a445aa5782bf3eee251c1dc0f3a.js": "/stock-helper/build/precache-manifest.906b0a445aa5782bf3eee251c1dc0f3a.js",
-    "service-worker.js": "/stock-helper/build/service-worker.js",
-    "static/css/main.c7861351.chunk.css.map": "/stock-helper/build/static/css/main.c7861351.chunk.css.map",
-    "static/js/2.aa386a9f.chunk.js.LICENSE.txt": "/stock-helper/build/static/js/2.aa386a9f.chunk.js.LICENSE.txt"
+    "main.css": "/stock-helper/static/css/main.c7861351.chunk.css",
+    "main.js": "/stock-helper/static/js/main.327a3bf0.chunk.js",
+    "main.js.map": "/stock-helper/static/js/main.327a3bf0.chunk.js.map",
+    "runtime-main.js": "/stock-helper/static/js/runtime-main.156c7593.js",
+    "runtime-main.js.map": "/stock-helper/static/js/runtime-main.156c7593.js.map",
+    "static/js/2.aa386a9f.chunk.js": "/stock-helper/static/js/2.aa386a9f.chunk.js",
+    "static/js/2.aa386a9f.chunk.js.map": "/stock-helper/static/js/2.aa386a9f.chunk.js.map",
+    "index.html": "/stock-helper/index.html",
+    "precache-manifest.392515b64c0ef4f5b880e23e43fe9fd5.js": "/stock-helper/precache-manifest.392515b64c0ef4f5b880e23e43fe9fd5.js",
+    "service-worker.js": "/stock-helper/service-worker.js",
+    "static/css/main.c7861351.chunk.css.map": "/stock-helper/static/css/main.c7861351.chunk.css.map",
+    "static/js/2.aa386a9f.chunk.js.LICENSE.txt": "/stock-helper/static/js/2.aa386a9f.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.c8110caa.js",
+    "static/js/runtime-main.156c7593.js",
     "static/js/2.aa386a9f.chunk.js",
     "static/css/main.c7861351.chunk.css",
-    "static/js/main.247fb20a.chunk.js"
+    "static/js/main.327a3bf0.chunk.js"
   ]
 }
