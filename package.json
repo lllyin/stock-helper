@@ -1,6 +1,6 @@
 {
   "name": "stock-helper",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "private": true,
   "dependencies": {
     "@antv/f2": "^3.8.3",
@@ -18,7 +18,11 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prepare": "husky install",
+    "release:major": "HUSKY=0 standard-version --release-as major --no-verify",
+    "release:minor": "HUSKY=0 standard-version --release-as minor --no-verify",
+    "release:patch": "HUSKY=0 standard-version --release-as patch --no-verify"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -37,6 +41,17 @@
   },
   "homepage": "https://andesome.github.io/stock-helper",
   "devDependencies": {
-    "@babel/plugin-proposal-decorators": "^7.13.5"
+    "@babel/plugin-proposal-decorators": "^7.13.5",
+    "@commitlint/cli": "^12.0.1",
+    "@commitlint/config-angular": "^12.0.1",
+    "commitizen": "^4.2.3",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^5.1.3",
+    "standard-version": "^9.1.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   }
 }
