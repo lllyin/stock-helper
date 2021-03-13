@@ -22,7 +22,7 @@ export interface Stock {
 
 - 第三方股市价格 api
 
-```js
+```javascript
 // 网易[jsonp]
 export const API_BASE_URL = 'https://api.money.126.net/data/feed/';
 
@@ -32,7 +32,7 @@ http://api.money.126.net/data/feed/0000001,1399300,0600684,UD_HS3Z,UD_HS3D,UD_HS
 
 - 第三方股市财务 api
 
-```js
+```javascript
 // 雪球[有同源限制，需要反代]
 export const API_QUOTE_URL = 'https://stock.xueqiu.com/v5/stock/quote.json?symbol=SH601318&extend=detail';
 
