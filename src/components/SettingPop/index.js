@@ -9,7 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   button: {
     color: '#888',
     textTransform: 'uppercase',
@@ -35,9 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction='up' ref={ref} {...props} />;
-});
+const Transition = React.forwardRef((props, ref) => <Slide direction='up' ref={ref} {...props} />);
 
 export default function SimulateSetting(props) {
   const classes = useStyles();
@@ -73,7 +71,7 @@ export default function SimulateSetting(props) {
   console.log('values', props);
 
   return (
-    <React.Fragment>
+    <>
       <Dialog
         open={open}
         TransitionComponent={Transition}
@@ -159,6 +157,6 @@ export default function SimulateSetting(props) {
           </DialogActions>
         </form>
       </Dialog>
-    </React.Fragment>
+    </>
   );
 }

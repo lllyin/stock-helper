@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import F2 from '@antv/f2';
 
 export default class extends Component {
-  static propTypes = {
-    creator: PropTypes.func.isRequired,
-    data: PropTypes.object.isRequired,
-    // width: PropTypes.number.isRequired,
-    // height: PropTypes.number.isRequired,
-  };
-
   id = `c${Math.random()
     .toString(36)
     .substring(7)}`;
@@ -38,12 +30,6 @@ export default class extends Component {
   componentWillUnmount() {
     this.chart.destroy();
     this.chart = null;
-  }
-
-  componentWillReceiveProps(next) {
-    if (next.data !== this.props.data) {
-      this.chart.changeData(next.data.source);
-    }
   }
 
   shouldComponentUpdate() {

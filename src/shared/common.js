@@ -12,14 +12,14 @@ export function getStockCodes(stocks = []) {
     if (isNaN(code[0])) {
       if (code.toLowerCase().indexOf('us_') > -1) {
         return code.toUpperCase();
-      } else if (code.indexOf('hk') > -1) {
+      } if (code.indexOf('hk') > -1) {
         return code;
-      } else {
+      } 
         return code.toLowerCase().replace('sz', '1').replace('sh', '0');
-      }
-    } else {
+      
+    } 
       return (code[0] === '6' ? '0' : '1') + code;
-    }
+    
   });
 }
 
@@ -31,7 +31,7 @@ export function genFnForBC(stocks = []) {
   });
 }
 
-export function soryBy(key, type) {}
+export function soryBy() {}
 
 /**
  * 根据反比函数公式，求一个最小近似值
@@ -40,10 +40,10 @@ export function soryBy(key, type) {}
  */
 function calcApproximateValue(formula = '', targetValue, options = {}) {
   const { step = 1, startX = 0, endX, cycleCount = 300 } = options;
-  let realCycleCount = endX ? endX - startX + 1 : cycleCount;
+  const realCycleCount = endX ? endX - startX + 1 : cycleCount;
   let count = 0;
   let i = 0;
-  let resultMap = {};
+  const resultMap = {};
 
   while (count < realCycleCount) {
     const vX = step + i;
@@ -69,7 +69,7 @@ function calcApproximateValue(formula = '', targetValue, options = {}) {
   };
 }
 
-//格式华
+// 格式华
 export function formatToLocalStocks(stocks = []) {
   return stocks.map((stock) => ({
     name: stock.name,
@@ -136,9 +136,9 @@ export function mergeStocks(serverStocks) {
 
       stockItem.advice = advice;
       return stockItem;
-    } else {
+    } 
       return localStock;
-    }
+    
   });
 
   return [...stocks];
@@ -217,8 +217,8 @@ export function calcStockSummary(stockList) {
  * @param options
  */
 export function toMultiple(n, m, options = {}) {
-  let n1 = Number(n);
-  let m1 = Number(m);
+  const n1 = Number(n);
+  const m1 = Number(m);
   // 返回值 是向上取整[ceil]，还是向下取整数[floor]
   const { to = 'ceil' } = options;
   const times = Math.floor(n1 / m1);
@@ -316,9 +316,9 @@ export function updateStock(key, newValues) {
         ...item,
         ...newValues,
       };
-    } else {
+    } 
       return item;
-    }
+    
   });
 
   localStorage.setItem('stocks', JSON.stringify(formatToLocalStocks(newStocks)));

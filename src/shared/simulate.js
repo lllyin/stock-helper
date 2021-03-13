@@ -78,18 +78,14 @@ export function simulate(initValue, options) {
 }
 
 // 分析结果
-function analyze(result) {
+export function analyze(result) {
   const { cycle, upRecords, downRecords, onlineRecords, soldRecords, buyRecords } = result;
 
   // 卖出的收益
-  const soldEarnAmount = soldRecords.reduce((sum, item) => {
-    return (sum += item.earnMoney);
-  }, 0);
+  const soldEarnAmount = soldRecords.reduce((sum, item) => {sum += item.earnMoney; return sum}, 0);
 
   // 买入合计金额
-  const buyAmount = buyRecords.reduce((sum, item) => {
-    return (sum += item.amount);
-  }, 0);
+  const buyAmount = buyRecords.reduce((sum, item) => {sum += item.amount; return sum}, 0);
 
   const currentAccout = onlineRecords[onlineRecords.length - 1];
 
@@ -123,9 +119,9 @@ function analyze(result) {
 function randomP(p) {
   if (Math.random() <= Number(p)) {
     return 1;
-  } else {
+  } 
     return 0;
-  }
+  
 }
 
 // 买操作
@@ -189,7 +185,7 @@ function reducePostion(prePostion, options, soldCb) {
 
   const soldRecord = {
     percent: optPercent,
-    costPrice: costPrice,
+    costPrice,
     price: newPrice,
     position: Math.abs(optPostion),
     earnRate: newEarnRate,
@@ -202,7 +198,7 @@ function reducePostion(prePostion, options, soldCb) {
   return {
     percent: optPercent,
     price: newPrice,
-    costPrice: costPrice,
+    costPrice,
     position: newPostion,
     earnRate: newEarnRate,
   };

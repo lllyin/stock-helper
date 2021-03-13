@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
-import StockItem from '../StockList/StockItem';
 import { formatToLocalStocks } from '@/shared/common';
-import Position from '../Position';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd'
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck'
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import Position from '../Position';
+import StockItem from "./StockItem";
 import { StockContext } from '../../reducers';
 
 import './StockList.scss';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   saveButton: {
     color: '#fff',
     fontSize: 16,
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   sortTool: {
     fontSize: 14,
-  }
+  },
 }));
 const TYPE_MAP = {
   asce: 1,
@@ -136,7 +136,7 @@ export default function StockList(props) {
       </div>
       {showPostion && (
         <Position
-          core={core => (StockList.core = core)}
+          core={core => { StockList.core = core }}
           stocks={editStocks || stocks || []}
           onItemComplete={handlePostionComplete}
           onAdd={handleAdd}

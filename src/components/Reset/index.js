@@ -8,16 +8,14 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   button: {
     color: '#555',
     fontSize: 12,
-  }
+  },
 }));
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
 
 export default function Rest(props) {
   const classes = useStyles();
@@ -37,7 +35,7 @@ export default function Rest(props) {
   };
 
   return (
-    <React.Fragment>
+    <>
       <Button size="small" onClick={handleClickOpen} className={classes.button}>
         reset
       </Button>
@@ -64,6 +62,6 @@ export default function Rest(props) {
           </Button>
         </DialogActions>
       </Dialog>
-    </React.Fragment>
+    </>
   );
 }

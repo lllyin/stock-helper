@@ -40,16 +40,16 @@ export default function SummaryPanel(props) {
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.detial}>
         {list.length <= 0 ? (
-          <React.Fragment>
+          <>
             <Typography display="inline" color="error">
               请先添加持仓，才能查看总览。
             </Typography>
             <Typography display="inline" className={classes.defaultColor} variant="body1">
               或者点击上方的RESET按钮,参看示例数据。
             </Typography>
-          </React.Fragment>
+          </>
         ) : (
-          <React.Fragment>
+          <>
             <Typography display="block" paragraph>
               <span>你持仓的总市值为{summary.marketValue}。</span>
               <span>总成本为{summary.costValue}。</span>
@@ -63,7 +63,7 @@ export default function SummaryPanel(props) {
                 建议账户保留流动资金{summary.advice?.hotMoney}元，以应对风险。
               </Typography>
             )}
-          </React.Fragment>
+          </>
         )}
       </ExpansionPanelDetails>
     </ExpansionPanel>

@@ -9,8 +9,8 @@ import { API_BASE_URL, UPDATE_INTERVAL } from '@/constants';
 import { getStockCodes, calcStockSummary, initData, resetData, mergeStocks } from '@/shared/common';
 import { stockReducer, stockInitData, StockContext } from '@/reducers';
 
-const $ = window.$;
-const useStyles = makeStyles((theme) => ({
+const {$} = window;
+const useStyles = makeStyles(() => ({
   root: {
     width: '100%',
   },
@@ -94,7 +94,7 @@ export default function DashBord() {
         type: 'GET',
         dataType: 'jsonp',
         url: `${API_BASE_URL}${getStockCodes(stockCodes).join(',')}`,
-        success: function (serverData, status, xhr) {
+        success (serverData) {
           const stockList = mergeStocks(serverData);
           const summary = calcStockSummary(stockList);
           dispatch({
@@ -106,7 +106,7 @@ export default function DashBord() {
           setSummary(summary);
           success && success();
         },
-        error: function (e) {
+        error () {
           console.error('请求接口错误');
           fail && fail();
         },

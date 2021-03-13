@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
   },
   panel: {
     padding: '8px 18px 24px',
-  }
+  },
 }));
 
 export default function StockPanel(props) {

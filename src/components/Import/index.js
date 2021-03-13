@@ -11,7 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   button: {
     color: '#888',
     textTransform: 'uppercase',
@@ -22,12 +22,10 @@ const useStyles = makeStyles((theme) => ({
   },
   tips: {
     fontSize: 14,
-  }
+  },
 }));
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
 
 export default function Import(props) {
   const classes = useStyles();
@@ -54,7 +52,7 @@ export default function Import(props) {
     text === '' && setError(false);
   };
 
-  const handleSubmit = (e, values) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     let json = false;
 
@@ -77,7 +75,7 @@ export default function Import(props) {
   };
 
   return (
-    <React.Fragment>
+    <>
       <IconButton aria-label="import" size="small" onClick={handleClickOpen} className={classes.button}>
         <ImportExportIcon size="small" className={classes.icon} />
       </IconButton>
@@ -129,6 +127,6 @@ export default function Import(props) {
           </DialogActions>
         </form>
       </Dialog>
-    </React.Fragment>
+    </>
   );
 }

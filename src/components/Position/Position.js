@@ -34,7 +34,7 @@ export default class Position extends Component {
   };
 
   // 点击添加一行按钮
-  handleAddRowClick = (addStockItem) => {
+  handleAddRowClick = () => {
     const { onAdd } = this.props;
 
     onAdd && onAdd(this.stocks);
@@ -65,7 +65,7 @@ export default class Position extends Component {
             onDelete={this.onDelete}
           />
         ))}
-        {/*添加行 */}
+        {/* 添加行 */}
         <AddPostionItem
           key={stocks.length}
           stocks={stocks}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { toMultiple, updateStock, calcTargetPrice1, calcTargetPrice2 } from '../../shared/common';
 import IconButton from '@material-ui/core/IconButton';
 import SettingsIcon from '@material-ui/icons/Settings';
+import { toMultiple, updateStock, calcTargetPrice1, calcTargetPrice2 } from '../../shared/common';
 import SettingPop from '../SettingPop';
 
 import './StockItem.scss';
@@ -9,11 +9,11 @@ import './StockItem.scss';
 function caclClass(number) {
   if (number > 0) {
     return 'red';
-  } else if (number < 0) {
+  } if (number < 0) {
     return 'green';
-  } else {
+  } 
     return 'default';
-  }
+  
 }
 
 function calcLink(data) {
@@ -46,7 +46,7 @@ export default class StockItem extends Component {
   };
 
   // 点击补仓函数跳转至函数绘图网站
-  handleLinkClick(data) {
+  handleLinkClick = (data) => {
     const url = calcLink(data);
     window.open(url, data.name);
   }
@@ -66,7 +66,7 @@ export default class StockItem extends Component {
     }
   };
 
-  calcTargetPercent = (targetRate, data) => {
+  calcTargetPercent = (targetRate) => {
     const { summary } = this.props;
 
     // 所有持仓最大亏损比绝对值
@@ -81,11 +81,9 @@ export default class StockItem extends Component {
     return inPercent;
   };
 
-  calcPercentStyle = (targetRate) => {
-    return {
+  calcPercentStyle = (targetRate) => ({
       flex: this.calcTargetPercent(targetRate),
-    };
-  };
+    });
 
   render() {
     const { data } = this.props;
@@ -95,7 +93,7 @@ export default class StockItem extends Component {
     const earningCls = caclClass(earningsPerShare);
 
     // 计算达到预期亏损的补仓建议
-    let { advice } = data;
+    const { advice } = data;
 
     const style = this.calcPercentStyle(data.earnRate);
 
@@ -128,7 +126,7 @@ export default class StockItem extends Component {
             </div>
           </div>
 
-          <div className='white-blank'></div>
+          <div className='white-blank' />
           <div className='row'>
             <div className='cell stock-spc-item'>
               <label className='stock-item-label'>现价</label>
@@ -142,8 +140,8 @@ export default class StockItem extends Component {
             </div>
           </div>
 
-          <div className='white-blank'></div>
-          <div className={`stock-spc-item percent-item`}>
+          <div className='white-blank' />
+          <div className="stock-spc-item percent-item">
             <label className='stock-item-label'>当日{data.percent >= 0 ? '涨' : '跌'}幅</label>
             <span className={`stock-item-value weight ${caclClass(data.percent)}`}>
               {(data.percent * 100).toFixed(2)}%
@@ -151,7 +149,7 @@ export default class StockItem extends Component {
             </span>
           </div>
 
-          <div className='white-blank'></div>
+          <div className='white-blank' />
           <div className='stock-spc-item earn-rate-item'>
             <label className='stock-item-label'>总盈亏</label>
             <span className={`stock-item-value ${earningCls} weight`} style={style}>
@@ -163,8 +161,8 @@ export default class StockItem extends Component {
           </div>
 
           {data.eps && data.pe && data.profits && (
-            <React.Fragment>
-              <div className='white-blank'></div>
+            <>
+              <div className='white-blank' />
               <div className='stock-spc-item earn-rate-item target'>
                 <label className='stock-item-label'>目标估值1</label>
                 <span
@@ -175,12 +173,12 @@ export default class StockItem extends Component {
                   {((calcTargetPrice1(data) / data.costPrice - 1) * 100).toFixed(3)}%
                 </span>
               </div>
-            </React.Fragment>
+            </>
           )}
 
           {data.eps && data.pe && data.profits && (
-            <React.Fragment>
-              <div className='white-blank'></div>
+            <>
+              <div className='white-blank' />
               <div className='stock-spc-item earn-rate-item target'>
                 <label className='stock-item-label'>目标估值2</label>
                 <span
@@ -191,10 +189,10 @@ export default class StockItem extends Component {
                   {((calcTargetPrice2(data) / data.costPrice - 1) * 100).toFixed(3)}%
                 </span>
               </div>
-            </React.Fragment>
+            </>
           )}
 
-          <div className='white-blank'></div>
+          <div className='white-blank' />
           <div className='stock-spc-item'>
             <label className='stock-item-label'>{earningsPerShare < 0 ? '补仓函数' : '加仓函数'}</label>
             <span
@@ -208,7 +206,7 @@ export default class StockItem extends Component {
             </span>
           </div>
 
-          <div className='white-blank'></div>
+          <div className='white-blank' />
 
           {advice.x && (
             <div className='stock-spc-item advice-item'>

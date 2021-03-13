@@ -2,11 +2,11 @@
 import React, { Component } from 'react';
 import { API_QUOTE_URL } from '../constants';
 
-const $ = window.$;
+const {$} = window;
 
 // 财务分析组件
 export default class Quote extends Component {
-  fetchQuote(data) {
+  fetchQuote = (data) => {
     const symbol = `${data.type}${data.symbol}`;
 
     // $.get(`${API_QUOTE_URL}?symbol=${symbol}&extend=detail`);
@@ -19,14 +19,15 @@ export default class Quote extends Component {
           Referer: 'https://xueqiu.com',
           Origin: 'https://xueqiu.com',
         },
-        success: function(res) {
+        success(res) {
           console.log(res);
         },
-        error: function(e) {
+        error() {
           console.error('请求接口错误');
         },
       });
   }
+
   render() {
     const { data } = this.props;
     return (

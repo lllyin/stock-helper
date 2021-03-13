@@ -54,9 +54,9 @@ export default class PostionItem extends Component {
 
       if (stock[schemaKey]) {
         return rule.required ? stock[schemaKey] : true;
-      } else {
+      } 
         return !rule.required;
-      }
+      
     });
   };
 

@@ -98,7 +98,7 @@ export default class LineChart extends PureComponent {
     };
 
     return (
-      <div className="jsChartWrap" ref={(node) => (this.boxRef = node)} style={boxStyles}>
+      <div className="jsChartWrap" ref={(node) => {this.boxRef = node}} style={boxStyles}>
         {boxRect.width && boxRect.height && source.length ? (
           <Chart data={{ source }} width={boxRect.width} height={boxRect.height} creator={this.creator} />
         ) : null}

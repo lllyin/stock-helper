@@ -20,6 +20,7 @@
     "test": "craco test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
+    "lint:script": "eslint ./src --ext '.js,.jsx,.ts,.tsx'",
     "release:major": "HUSKY=0 standard-version --release-as major --no-verify",
     "release:minor": "HUSKY=0 standard-version --release-as minor --no-verify",
     "release:patch": "HUSKY=0 standard-version --release-as patch --no-verify"
@@ -41,6 +42,9 @@
   },
   "homepage": "https://andesome.github.io/stock-helper",
   "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/eslint-parser": "^7.13.10",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/plugin-proposal-decorators": "^7.13.5",
     "@commitlint/cli": "^12.0.1",
     "@commitlint/config-angular": "^12.0.1",

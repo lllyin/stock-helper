@@ -11,7 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import SettingsIcon from '@material-ui/icons/Settings';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   button: {
     color: '#888',
     textTransform: 'uppercase',
@@ -36,9 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
 
 export default function SimulateSetting(props) {
   const classes = useStyles();
@@ -74,7 +72,7 @@ export default function SimulateSetting(props) {
   };
 
   return (
-    <React.Fragment>
+    <>
       <IconButton aria-label="setting" onClick={handleClickOpen} className={classes.button}>
         <SettingsIcon className={classes.icon} />
       </IconButton>
@@ -114,7 +112,7 @@ export default function SimulateSetting(props) {
                 type="number"
                 size="small"
                 className={classes.mediumWidth}
-                value={values['down_threshold']}
+                value={values.down_threshold}
                 onChange={(e) => handleInputChange(e, 'down_threshold')}
                 InputProps={{
                   endAdornment: <InputAdornment position="start">%</InputAdornment>,
@@ -190,6 +188,6 @@ export default function SimulateSetting(props) {
           </DialogActions>
         </form>
       </Dialog>
-    </React.Fragment>
+    </>
   );
 }
