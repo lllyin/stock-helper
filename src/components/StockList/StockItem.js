@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { toMultiple, updateStock, calcTargetPrice1, calcTargetPrice2 } from '../utils/common';
+import { toMultiple, updateStock, calcTargetPrice1, calcTargetPrice2 } from '../../shared/common';
 import IconButton from '@material-ui/core/IconButton';
 import SettingsIcon from '@material-ui/icons/Settings';
-import SettingPop from './SettingPop';
+import SettingPop from '../SettingPop';
 
 import './StockItem.scss';
 

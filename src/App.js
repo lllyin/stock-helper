@@ -1,6 +1,5 @@
 import React from 'react';
-import Dashbord from './Dashbord';
-import { resetData } from './utils/common'
+import Dashbord from './pages/Dashbord';
 
 import './App.scss';
 

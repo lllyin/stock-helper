@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import LineChart from '../Chart/LineChart';
-import { simulate } from '../../utils/simulate';
+import { simulate } from '../../shared/simulate';
 
 const useStyles = makeStyles((theme) => ({
   root: {

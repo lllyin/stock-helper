@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
-import StockItem from './StockItem';
-import { formatToLocalStocks } from '../utils/common';
-import Position from './Position';
+import StockItem from '../StockList/StockItem';
+import { formatToLocalStocks } from '@/shared/common';
+import Position from '../Position';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd'
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck'
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import { StockContext } from '../reducers';
+import { StockContext } from '../../reducers';
 
-import './Stock.scss';
+import './StockList.scss';
 
 const useStyles = makeStyles((theme) => ({
   saveButton: {

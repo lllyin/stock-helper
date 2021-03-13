@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useReducer, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
-import Reset from './components/Reset';
-import Import from './components/Import';
-import StockPanel from './components/StockPanel';
-import SummaryPanel from './components/SummaryPanel';
-import { API_BASE_URL, UPDATE_INTERVAL } from './constants';
-import { getStockCodes, calcStockSummary, initData, resetData, mergeStocks } from './utils/common';
-import { stockReducer, stockInitData, StockContext } from './reducers';
+import Reset from '@/components/Reset';
+import Import from '@/components/Import';
+import StockPanel from '@/components/StockPanel';
+import SummaryPanel from '@/components/SummaryPanel';
+import { API_BASE_URL, UPDATE_INTERVAL } from '@/constants';
+import { getStockCodes, calcStockSummary, initData, resetData, mergeStocks } from '@/shared/common';
+import { stockReducer, stockInitData, StockContext } from '@/reducers';
 
 const $ = window.$;
 const useStyles = makeStyles((theme) => ({

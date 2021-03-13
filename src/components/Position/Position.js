@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PositionItem from './PositionItem';
-import AddPostionItem from './AddPostionItem';
+import AddPostionItem from '../AddPostionItem';
 
 import './Position.scss';
 
