@@ -1,8 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Typography from '@material-ui/core/Typography';
 import StockList from '../StockList';
@@ -29,13 +29,13 @@ export default function StockPanel(props) {
   const { map, list, onSave, dispatch } = props;
 
   return (
-    <ExpansionPanel expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
-      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel2bh-content" id="panel2bh-header">
+    <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel2bh-content" id="panel2bh-header">
         <Typography className={classes.heading}>持仓</Typography>
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails className={classes.panel}>
+      </AccordionSummary>
+      <AccordionDetails className={classes.panel}>
         <StockList map={map} list={list} onSave={onSave} dispatch={dispatch} />
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+      </AccordionDetails>
+    </Accordion>
   );
 }

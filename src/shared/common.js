@@ -1,6 +1,8 @@
 import Big from 'big.js';
 import { getStocksStorage, setStocksStorage } from '@/reducers/storage'
-import { STOCKS, EXPECT_LOSS_RATE, ADVICE_LOSS_RATE } from '../constants';
+import { DEFAULT_STOCKS, EXPECT_LOSS_RATE, ADVICE_LOSS_RATE } from '../constants';
+
+window.Big = Big;
 
 // eslint-disable-next-line no-extend-native
 String.prototype.replaceAt = function (index, replacement) {
@@ -87,7 +89,7 @@ export function formatToLocalStocks(stocks = []) {
 // 初始化数据
 export function initData() {
   if (!localStorage.getItem('pageView')) {
-    localStorage.setItem('stocks', JSON.stringify(STOCKS));
+    localStorage.setItem('stocks', JSON.stringify(DEFAULT_STOCKS));
     localStorage.setItem('pageView', 1);
   } else {
     const pageView = localStorage.getItem('pageView');
@@ -96,7 +98,7 @@ export function initData() {
 }
 
 // 重置数据
-export function resetData(defaultJson = STOCKS) {
+export function resetData(defaultJson = DEFAULT_STOCKS) {
   setStocksStorage(defaultJson)
 }
 
@@ -187,7 +189,7 @@ export function calcStockSummary(stockList) {
     return sum;
   }, summary);
 
-  summary.earnRate = new Big(summary.marketValue).div(summary.costValue).minus(1).toFixed(4).valueOf();
+  summary.earnRate = new Big(summary.marketValue).div(summary.costValue || 1).minus(1).toFixed(4).valueOf();
   summary.earnMoney = new Big(summary.marketValue).minus(summary.costValue).valueOf();
 
   if (stockList && stockList.length > 0) {

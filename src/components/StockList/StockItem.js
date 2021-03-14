@@ -112,7 +112,7 @@ export default class StockItem extends Component {
           onConfirm={this.handleConfirm}
           onClose={() => this.handleToogleSetting(false)}
         />
-        <seaction>
+        <section>
           <div className='row'>
             <div className='cell stock-spc-item'>
               <label className='stock-item-label'>成本</label>
@@ -218,7 +218,7 @@ export default class StockItem extends Component {
               </span>
             </div>
           )}
-        </seaction>
+        </section>
       </div>
     );
   }

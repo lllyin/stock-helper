@@ -5,8 +5,8 @@ import Reset from '@/components/Reset'
 import Import from '@/components/Import'
 import StockPanel from '@/components/StockPanel'
 import SummaryPanel from '@/components/SummaryPanel'
-import { API_BASE_URL, UPDATE_INTERVAL } from '@/constants'
-import { getStockCodes, initData, resetData } from '@/shared/common'
+import { API_BASE_URL, UPDATE_INTERVAL, DEFAULT_STOCKS } from '@/constants'
+import { getStockCodes, initData } from '@/shared/common'
 import { Context } from '@/reducers/index'
 import jsonp from '@/shared/request/jsonp'
 import { isEmpty } from '@/shared/utils'
@@ -57,36 +57,49 @@ export default function DashBord() {
   const classes = useStyles()
   const [tips, setTips] = useState({ open: false, message: '' })
   const { store, dispatch } = useContext(Context)
-  const { _stocks, stocksMap, summary } = store
+  const { _stocks ,stocksMap, summary } = store
 
   useEffect(() => {
     initData()
     fetchStocks()
-
-    timer = setInterval(() => {
-      fetchStocks()
-    }, UPDATE_INTERVAL)
+    // 轮询
+    pollStockInfo()
+  
     return () => {
-      clearInterval(timer)
+      clearTimeout(timer)
     }
-  }, [])
+  }, [_stocks])
+
+  // 轮询价格
+  const pollStockInfo = () => {
+    timer = setTimeout(() => {
+      fetchStocks()
+      pollStockInfo()
+    }, UPDATE_INTERVAL);
+  }
 
   // 获取股票信息
-  function fetchStocks() {
+  function fetchStocks({ success, fail } = {}) {
     const _codes = _stocks.map((stock) => String(stock.symbol))
 
-    if(isEmpty(_codes)) return;
+    if (isEmpty(_codes)) return
 
     jsonp({
       type: 'GET',
       dataType: 'jsonp',
       url: `${API_BASE_URL}${getStockCodes(_codes).join(',')}`,
-    }).then((serverStocks) => {
-      dispatch({
-        type: 'INIT_STOCK',
-        payload: serverStocks,
-      })
-    })
+    }).then(
+      (serverStocks) => {
+        dispatch({
+          type: 'INIT_STOCK',
+          payload: serverStocks,
+        })
+        success && success(serverStocks)
+      },
+      (err) => {
+        fail && fail(err)
+      }
+    )
   }
 
   function handleTipClose() {
@@ -99,18 +112,18 @@ export default function DashBord() {
 
   function handleResetConfirm() {
     dispatch({
-      type: 'SAVE',
+      type: '_INIT_STOCK_',
+      payload: DEFAULT_STOCKS,
     })
-    resetData()
     fetchStocks({
-      success: () => {
+      success() {
         setTips({
           status: 'success',
           open: true,
           message: '重置成功',
         })
       },
-      fail: () => {
+      fail() {
         setTips({
           status: 'error',
           open: true,
@@ -123,9 +136,9 @@ export default function DashBord() {
   function handleImportConfirm(json) {
     if (json) {
       dispatch({
-        type: 'SAVE',
+        type: '_INIT_STOCK_',
+        payload: json,
       })
-      resetData(json)
       fetchStocks({
         success: () => {
           setTips({
@@ -145,6 +158,7 @@ export default function DashBord() {
     }
   }
 
+  console.log('store:', store)
   return (
     <>
       <div className={classes.root}>

@@ -16,7 +16,7 @@ export const EXPECT_LOSS_RATE = -0.06;
 export const ADVICE_LOSS_RATE = -0.059;
 
 // 持仓股
-export const STOCKS = [
+export const DEFAULT_STOCKS = [
   {
     name: '伊利股份',
     // 股票代码

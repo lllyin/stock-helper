@@ -1,8 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Typography from '@material-ui/core/Typography';
 import { isEmpty } from '@/shared/utils'
@@ -36,11 +36,11 @@ export default function SummaryPanel(props) {
   const _isEmpty = isEmpty(summary) || isEmpty(list)
 
   return (
-    <ExpansionPanel className={classes.haha} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel2bh-content" id="panel2bh-header">
+    <Accordion className={classes.haha} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel2bh-content" id="panel2bh-header">
         <Typography className={classes.heading}>总览</Typography>
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails className={classes.detial}>
+      </AccordionSummary>
+      <AccordionDetails className={classes.detial}>
         {_isEmpty ? (
           <>
             <Typography display="inline" color="error">
@@ -67,7 +67,7 @@ export default function SummaryPanel(props) {
             )}
           </>
         )}
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+      </AccordionDetails>
+    </Accordion>
   );
 }

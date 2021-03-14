@@ -18,21 +18,6 @@ export function stockInit(initialData) {
 
 export function reducers(state, action) {
   switch (action.type) {
-    case 'ADD':
-      return { ...state, showPostion: true, isEdit: true }
-    case 'EDIT':
-      return { ...state, showPostion: true, isEdit: true }
-    case 'SAVE':
-      return { ...state, showPostion: false, isEdit: false }
-    case 'RESET':
-      return { ...state, showPostion: false, isEdit: false }
-    case 'INIT':
-      return stockInit(action.payload)
-    case 'SET':
-      return { ...state, ...action.payload }
-    case 'SET_SUMMARY': {
-      return { ...state, summary: { ...action.payload } }
-    }
     case 'INIT_STOCK': {
       if(isEmpty(action.payload)) return state
 
@@ -44,6 +29,13 @@ export function reducers(state, action) {
         summary,
         stocksMap: action.payload,
         stocks: stockList,
+      }
+    }
+    case '_INIT_STOCK_': {
+      setStocksStorage(action.payload)
+      return {
+        ...state,
+        _stocks: action.payload,
       }
     }
     case '_ADD_STOCK_': {
