@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/Andesome/stock-helper/compare/v0.1.3...v1.0.0) (2021-03-14)
+
+
+### Features
+
+* 内置加仓收益曲线 ([4dd64d1](https://github.com/Andesome/stock-helper/commit/4dd64d16432f4694d3acc5106d2278cc7007f4e1))
+* 持仓支持增删改 ([b5114db](https://github.com/Andesome/stock-helper/commit/b5114db9c2beb198d19f62cd21b971d978ed09ce))
+
 ### 0.1.3 (2021-03-13)
 
 
