@@ -1,6 +1,6 @@
 
 ## 体验链接
-[https://andesome.github.io/stock-helper/indx.html](https://andesome.github.io/stock-helper/index.html)
+[Demo Online](https://andesome.github.io/stock-helper/index.html#/dashbord)
 
 ## 数据源格式
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import F2 from '@antv/f2'
+import TouchEmulator from '@/shared/TouchEmulator'
 
 export default class extends Component {
   id = `c${Math.random().toString(36).substring(7)}`
@@ -52,6 +53,7 @@ export default class extends Component {
     if (parentEl) {
       const { width, height } = parentEl.getBoundingClientRect()
 
+      TouchEmulator(this.canvas)
       this.setState({
         isRender: true,
       })
