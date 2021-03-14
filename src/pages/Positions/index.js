@@ -46,7 +46,8 @@ export default function Positions() {
       )
     })
 
-  const handleUpdate = (newData) => new Promise((resolve) => {
+  const handleUpdate = (newData) =>
+    new Promise((resolve) => {
       resolve(
         dispatch({
           type: '_UPDATE_STOCK_',
@@ -63,8 +64,7 @@ export default function Positions() {
           payload: rowData,
         })
       )
-    }) 
-
+    })
   return (
     <div className={classes.root}>
       <MaterialTable
@@ -83,6 +83,14 @@ export default function Positions() {
         }}
         localization={{
           header: { actions: '操作' },
+          body: {
+            deleteTooltip: '删除',
+            editTooltip: '编辑',
+            addTooltip: '添加',
+            editRow: {
+              deleteText: '确定删除吗?',
+            },
+          },
         }}
       />
     </div>

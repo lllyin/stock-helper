@@ -8,7 +8,7 @@ export function getStocksStorage() {
   let _stocks = []
 
   try {
-    _stocks = JSON.parse(localStorage.getItem(_STORAGE_KEY_))
+    _stocks = JSON.parse(localStorage.getItem(_STORAGE_KEY_)) || []
   } catch (err) {
     console.warn('读取localStorage报错', err)
   }

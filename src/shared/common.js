@@ -1,6 +1,7 @@
 import Big from 'big.js';
 import { getStocksStorage, setStocksStorage } from '@/reducers/storage'
 import { DEFAULT_STOCKS, EXPECT_LOSS_RATE, ADVICE_LOSS_RATE } from '../constants';
+import { excuteExpression } from './math'
 
 window.Big = Big;
 
@@ -50,7 +51,7 @@ function calcApproximateValue(formula = '', targetValue, options = {}) {
 
   while (count < realCycleCount) {
     const vX = step + i;
-    const formulaStr = putIntoFormula(formula, 'x', vX);
+    const formulaStr = excuteExpression(formula, 'x', vX);
     // eslint-disable-next-line no-eval
     const result = eval(formulaStr);
     const delta = Math.abs(result - targetValue);
@@ -240,37 +241,6 @@ export function toMultiple(n, m, options = {}) {
       return Big(times).plus(1).times(m1).valueOf();
     }
   }
-}
-
-/**
- * 代入变量到公式
- * @param {*} formula 公式
- * @param {*} variableKey 变量key
- * @param {*} variable 代入变量值
- */
-function putIntoFormula(formula, variableKey, variable) {
-  const matchs = formula.match(new RegExp(variableKey, 'gi'));
-  let newFormula = formula;
-
-  if (matchs.length) {
-    matchs.forEach(() => {
-      const variableIdx = newFormula.indexOf(variableKey);
-      const prevChart = newFormula[variableIdx - 1];
-      const nextChart = newFormula[variableIdx + 1];
-
-      if (variableIdx > -1) {
-        if (/\d/.test(prevChart)) {
-          newFormula = newFormula.replaceAt(variableIdx, `*${variable}`);
-        } else if (/\d/.test(nextChart)) {
-          newFormula = newFormula.replaceAt(variableIdx, `${variable}*`);
-        } else {
-          newFormula = newFormula.replaceAt(variableIdx, `${variable}`);
-        }
-      }
-    });
-  }
-
-  return newFormula;
 }
 
 // 格式化模拟设置

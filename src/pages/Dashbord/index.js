@@ -158,7 +158,6 @@ export default function DashBord() {
     }
   }
 
-  console.log('store:', store)
   return (
     <>
       <div className={classes.root}>
