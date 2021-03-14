@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@/components/*": ["./src/components/*"],
-      "@/shared/*": ["./src/shared/*"],
+      "@/components/*": ["src/components/*"],
+      "@/shared/*": ["src/shared/*"],
       "@/utils/*": ["src/shared/*"],
-      "@/constants/*": ["src/constants/*"]
+      "@/constants/*": ["src/constants/*"],
+      "@/apis/*": ["src/apis/*"],
+      "@/reducers/*": ["src/reducers/*"]
     }
   },
   "include": ["src/**/*"]

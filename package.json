@@ -7,11 +7,15 @@
     "@craco/craco": "^6.1.1",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
+    "axios": "^0.21.1",
+    "axios-service": "^1.4.4",
     "big.js": "^5.2.2",
     "cra-template": "1.0.2",
+    "material-table": "^1.69.2",
     "node-sass": "^4.14.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3"
   },
   "scripts": {
@@ -20,7 +24,7 @@
     "test": "craco test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "lint:script": "eslint ./src --ext '.js,.jsx,.ts,.tsx'",
+    "lint:script": "eslint ./src --fix --ext '.js,.jsx,.ts,.tsx'",
     "release:major": "HUSKY=0 standard-version --release-as major --no-verify",
     "release:minor": "HUSKY=0 standard-version --release-as minor --no-verify",
     "release:patch": "HUSKY=0 standard-version --release-as patch --no-verify"

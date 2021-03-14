@@ -68,8 +68,6 @@ export default function SimulateSetting(props) {
     props.onConfirm && props.onConfirm(values);
   };
 
-  console.log('values', props);
-
   return (
     <>
       <Dialog

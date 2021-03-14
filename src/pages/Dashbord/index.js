@@ -1,15 +1,16 @@
-import React, { useEffect, useState, useReducer, useRef } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Snackbar from '@material-ui/core/Snackbar';
-import Reset from '@/components/Reset';
-import Import from '@/components/Import';
-import StockPanel from '@/components/StockPanel';
-import SummaryPanel from '@/components/SummaryPanel';
-import { API_BASE_URL, UPDATE_INTERVAL } from '@/constants';
-import { getStockCodes, calcStockSummary, initData, resetData, mergeStocks } from '@/shared/common';
-import { stockReducer, stockInitData, StockContext } from '@/reducers';
+import React, { useEffect, useState, useContext } from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Snackbar from '@material-ui/core/Snackbar'
+import Reset from '@/components/Reset'
+import Import from '@/components/Import'
+import StockPanel from '@/components/StockPanel'
+import SummaryPanel from '@/components/SummaryPanel'
+import { API_BASE_URL, UPDATE_INTERVAL } from '@/constants'
+import { getStockCodes, initData, resetData } from '@/shared/common'
+import { Context } from '@/reducers/index'
+import jsonp from '@/shared/request/jsonp'
+import { isEmpty } from '@/shared/utils'
 
-const {$} = window;
 const useStyles = makeStyles(() => ({
   root: {
     width: '100%',
@@ -48,90 +49,44 @@ const useStyles = makeStyles(() => ({
       color: 'rgb(30, 70, 32)',
     },
   },
-}));
+}))
 // 定时器
-let timer = null;
+let timer = null
 
 export default function DashBord() {
-  const classes = useStyles();
-  const [stocksMap, setStocksMap] = useState({});
-  const [stockList, setStockList] = useState([]);
-  const [tips, setTips] = useState({ open: false, message: '' });
-  const [summary, setSummary] = useState({});
-  const [stockState, dispatch] = useReducer(stockReducer, stockInitData);
-  const stockRef = useRef(stockState);
+  const classes = useStyles()
+  const [tips, setTips] = useState({ open: false, message: '' })
+  const { store, dispatch } = useContext(Context)
+  const { _stocks, stocksMap, summary } = store
 
   useEffect(() => {
-    initData();
-    fetchStocks();
+    initData()
+    fetchStocks()
 
     timer = setInterval(() => {
-      fetchStocks();
-    }, UPDATE_INTERVAL);
+      fetchStocks()
+    }, UPDATE_INTERVAL)
     return () => {
-      clearInterval(timer);
-    };
-  }, []);
+      clearInterval(timer)
+    }
+  }, [])
 
   // 获取股票信息
-  function fetchStocks(options = {}) {
-    const { success, fail } = options;
-    const localStockStr = localStorage.getItem('stocks');
-    const STOCKS = localStockStr ? JSON.parse(localStockStr) : [];
-    const stockCodes = STOCKS.map((stock) => String(stock.symbol));
-    const { isEdit } = stockRef.current;
+  function fetchStocks() {
+    const _codes = _stocks.map((stock) => String(stock.symbol))
 
-    if (STOCKS.length <= 0) {
-      setStocksMap({});
-      setStockList([]);
-      setSummary({});
-      return;
-    }
+    if(isEmpty(_codes)) return;
 
-    $ &&
-      !isEdit &&
-      $.ajax({
-        type: 'GET',
-        dataType: 'jsonp',
-        url: `${API_BASE_URL}${getStockCodes(stockCodes).join(',')}`,
-        success (serverData) {
-          const stockList = mergeStocks(serverData);
-          const summary = calcStockSummary(stockList);
-          dispatch({
-            type: 'SET_SUMMARY',
-            payload: summary,
-          });
-          setStocksMap(serverData);
-          setStockList(stockList);
-          setSummary(summary);
-          success && success();
-        },
-        error () {
-          console.error('请求接口错误');
-          fail && fail();
-        },
-      });
-  }
-
-  function handleSave() {
-    stockRef.current = { ...stockState, showPostion: false, isEdit: false };
-
-    fetchStocks({
-      success: () => {
-        setTips({
-          status: 'success',
-          open: true,
-          message: '保存成功',
-        });
-      },
-      fail: () => {
-        setTips({
-          status: 'error',
-          open: true,
-          message: '保存失败',
-        });
-      },
-    });
+    jsonp({
+      type: 'GET',
+      dataType: 'jsonp',
+      url: `${API_BASE_URL}${getStockCodes(_codes).join(',')}`,
+    }).then((serverStocks) => {
+      dispatch({
+        type: 'INIT_STOCK',
+        payload: serverStocks,
+      })
+    })
   }
 
   function handleTipClose() {
@@ -139,63 +94,59 @@ export default function DashBord() {
       status: 'default',
       open: false,
       message: '',
-    });
+    })
   }
 
   function handleResetConfirm() {
     dispatch({
       type: 'SAVE',
-    });
-    stockRef.current = { ...stockState, showPostion: false, isEdit: false };
-    resetData();
+    })
+    resetData()
     fetchStocks({
       success: () => {
         setTips({
           status: 'success',
           open: true,
           message: '重置成功',
-        });
+        })
       },
       fail: () => {
         setTips({
           status: 'error',
           open: true,
           message: '重置失败',
-        });
+        })
       },
-    });
+    })
   }
 
   function handleImportConfirm(json) {
     if (json) {
       dispatch({
         type: 'SAVE',
-      });
-      stockRef.current = { ...stockState, showPostion: false, isEdit: false };
-      resetData(json);
+      })
+      resetData(json)
       fetchStocks({
         success: () => {
           setTips({
             status: 'success',
             open: true,
             message: '导入成功',
-          });
+          })
         },
         fail: () => {
           setTips({
             status: 'error',
             open: true,
             message: '导入失败',
-          });
+          })
         },
-      });
+      })
     }
   }
 
-  stockRef.current = stockState;
-
   return (
-    <StockContext.Provider value={stockState}>
+    <>
       <div className={classes.root}>
         <div className={classes.header}>
           <h2 className="title-box">
@@ -206,10 +157,10 @@ export default function DashBord() {
             <Import onConfirm={handleImportConfirm} />
           </div>
         </div>
-        <SummaryPanel map={stocksMap} list={stockList} summary={summary} />
-        <StockPanel map={stocksMap} list={stockList} onSave={handleSave} dispatch={dispatch} />
+        <SummaryPanel map={stocksMap} list={store.stocks} summary={summary} />
+        <StockPanel map={stocksMap} list={store.stocks} dispatch={dispatch} />
       </div>
-     
+
       <Snackbar
         className={`${classes.snackbar} ${tips.status}`}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
@@ -218,6 +169,6 @@ export default function DashBord() {
         autoHideDuration={3000}
         message={tips.message}
       />
-    </StockContext.Provider>
-  );
+    </>
+  )
 }

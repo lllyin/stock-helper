@@ -60,7 +60,6 @@ export default class StockItem extends Component {
 
   // 点击面板确定
   handleConfirm = (values) => {
-    console.log('handleConfirm', values);
     if (values) {
       updateStock(this.props.data.symbol, values);
     }
@@ -97,7 +96,6 @@ export default class StockItem extends Component {
 
     const style = this.calcPercentStyle(data.earnRate);
 
-    console.log('hah', data);
     return (
       <div className={`stock-item ${earningCls}`}>
         <div className='title-box'>

@@ -5,6 +5,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Typography from '@material-ui/core/Typography';
+import { isEmpty } from '@/shared/utils'
 
 const useStyles = makeStyles(theme => ({
   panel: {
@@ -32,6 +33,7 @@ export default function SummaryPanel(props) {
   };
 
   const { summary = {}, list = [] } = props;
+  const _isEmpty = isEmpty(summary) || isEmpty(list)
 
   return (
     <ExpansionPanel className={classes.haha} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
@@ -39,7 +41,7 @@ export default function SummaryPanel(props) {
         <Typography className={classes.heading}>总览</Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.detial}>
-        {list.length <= 0 ? (
+        {_isEmpty ? (
           <>
             <Typography display="inline" color="error">
               请先添加持仓，才能查看总览。

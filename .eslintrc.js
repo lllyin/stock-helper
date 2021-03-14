@@ -50,6 +50,7 @@ module.exports = {
     'react/default-props-match-prop-types': 0,
     'react-hooks/rules-of-hooks': 2, // Checks rules of Hooks
 
+    'import/prefer-default-export': 0,
     'import/extensions': 0,
     'import/no-cycle': 0,
     'react/jsx-filename-extension': [2, { 'extensions': ['.js', '.jsx', '.ts', '.tsx'] }],
@@ -76,7 +77,7 @@ module.exports = {
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/label-has-for.md
     'jsx-a11y/label-has-for': 0,
 
-    'comma-dangle': ['error', 'always-multiline'],
+    'comma-dangle': [0, 'always-multiline'],
     'consistent-return': 0, // TODO: remove later
     'no-param-reassign': 0, // TODO: remove later
     'no-underscore-dangle': 0,
@@ -102,6 +103,7 @@ module.exports = {
     'no-bitwise': 0,
     'import/no-unresolved': 0,
     'operator-assignment': 0,
+    'quotes': ['error', 'single'],
   },
   globals: {
     gtag: true,

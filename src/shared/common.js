@@ -1,4 +1,5 @@
 import Big from 'big.js';
+import { getStocksStorage, setStocksStorage } from '@/reducers/storage'
 import { STOCKS, EXPECT_LOSS_RATE, ADVICE_LOSS_RATE } from '../constants';
 
 // eslint-disable-next-line no-extend-native
@@ -96,23 +97,22 @@ export function initData() {
 
 // 重置数据
 export function resetData(defaultJson = STOCKS) {
-  localStorage.setItem('stocks', JSON.stringify(defaultJson));
+  setStocksStorage(defaultJson)
 }
 
 // 合并本地和接口数据
 export function mergeStocks(serverStocks) {
-  const localStockStr = localStorage.getItem('stocks');
-  const STOCKS = localStockStr ? JSON.parse(localStockStr) : [];
-  const stockMap = Object.values(serverStocks).reduce((sum, stock) => {
+  const localStocks = getStocksStorage();
+  const serverStockMap = Object.values(serverStocks).reduce((sum, stock) => {
     sum[stock.symbol] = stock;
     return sum;
   }, {});
   // 合并成本价、持仓信息
-  const stocks = STOCKS.map((localStock) => {
-    if (stockMap[localStock.symbol]) {
+  const stocks = localStocks.map((localStock) => {
+    if (serverStockMap[localStock.symbol]) {
       const stockItem = {
         ...localStock,
-        ...stockMap[localStock.symbol],
+        ...serverStockMap[localStock.symbol],
       };
       // 每股计算的建议信息
       let advice = {};
@@ -137,11 +137,11 @@ export function mergeStocks(serverStocks) {
       stockItem.advice = advice;
       return stockItem;
     } 
-      return localStock;
+    return undefined;
     
   });
 
-  return [...stocks];
+  return [...stocks].filter(v => v);
 }
 
 // 计算持仓汇总信息
@@ -307,10 +307,9 @@ export const formatSimulateValues = (values) => {
  * @returns
  */
 export function updateStock(key, newValues) {
-  const localStockStr = localStorage.getItem('stocks');
-  const stocks = localStockStr ? JSON.parse(localStockStr) : [];
+  const localStocks = getStocksStorage();
 
-  const newStocks = stocks.map((item) => {
+  const newStocks = localStocks.map((item) => {
     if (String(item.symbol) === String(key)) {
       return {
         ...item,
@@ -321,7 +320,7 @@ export function updateStock(key, newValues) {
     
   });
 
-  localStorage.setItem('stocks', JSON.stringify(formatToLocalStocks(newStocks)));
+  setStocksStorage(formatToLocalStocks(newStocks))
   return newStocks;
 }
 

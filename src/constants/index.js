@@ -4,6 +4,8 @@ export const API_BASE_URL = 'https://api.money.126.net/data/feed/';
 // 第三方股市财务api
 export const API_QUOTE_URL = 'https://stock.xueqiu.com/v5/stock/quote.json';
 
+export const SINA_API = 'https://hq.sinajs.cn/list='
+
 // 刷新间隔（毫秒）
 export const UPDATE_INTERVAL = 3000;
 
