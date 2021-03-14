@@ -4,6 +4,9 @@ import { Container } from '@material-ui/core';
 import FloatButtom from '../FloatButtom'
 
 const useStyles = makeStyles({
+  container: {
+    paddingBottom: 60,
+  },
   navbar: {
     position: 'fixed',
     bottom: 20,
@@ -19,7 +22,7 @@ export default function BasicLayout(props) {
   const classes = useStyles()
 
   return (
-    <Container fixed>
+    <Container fixed className={classes.container}>
       { children }
 
         <div className={classes.navbar}>
